@@ -1,0 +1,16 @@
+.Link-button {
+    background-color: transparent;
+    border-color: transparent;
+    font-family: 'Playwrite DE Grund', sans-serif;
+    font-size: 18px;
+}
+
+
+.Link-button:hover {
+    color: white;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
