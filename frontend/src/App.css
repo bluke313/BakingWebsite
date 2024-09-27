@@ -1,76 +1,21 @@
-.App {
-  text-align: center;
-  background-color: #c46e08;
-  font-family: 'Playwrite DE Grund', sans-serif;
+html {
+    scroll-behavior: smooth;
+    color: white;
 }
 
-.Padder {
-  padding-left: 5%;
-  padding-right: 5%;
+::-webkit-scrollbar {
+    width: 16px;
 }
 
-.App-header {
-  background-color: #c46e08;
-  text-align: left;
-  display: flex;
-  flex-direction: row;
-  padding-top: 2vh;
-  padding-left: 4%;
-  padding-right: 5%;
+::-webkit-scrollbar-thumb {
+    background-color: #5a3015;
+    border-radius: 6px;
 }
 
-.Title-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+::-webkit-scrollbar-track {
+    background: #9d5425;
 }
 
-.Section-1 {
-  display: flex;
-  align-items: center;
-  color: white;
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
-.Section-2 {
-  color: white;
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
-.Thirds {
-  display: flex;
-  justify-content: center;
-}
-
-.Third-div {
-  width: 33%;
-}
-
-#Sect1TextContainer {
-  margin: 15%
-}
-
-.Half-div {
-  width: 50%;
-  height: 400;
-}
-
-.Quarter-div {
-  width: 25%;
-  max-height: 14vh;
-}
-
-.Section-4 {
-  background-color: white;
-  height: 50vh;
-}
-
-.Footer {
-  max-height: 14vh;
-  background-color: #9d5425;
-  display: flex;
-  align-items: center;
-  color: white;
+::-webkit-scrollbar-thumb:hover {
+    background: #3d200e;
 }
