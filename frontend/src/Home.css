@@ -1,9 +1,3 @@
-.App {
-  text-align: center;
-  background-color: #c46e08;
-  font-family: 'Playwrite DE Grund', sans-serif;
-}
-
 .Padder {
   padding-left: 5%;
   padding-right: 5%;
@@ -92,12 +86,4 @@
 #Section-4 {
   background-color: white;
   height: 50vh;
-}
-
-.Footer {
-  max-height: 14vh;
-  background-color: #9d5425;
-  display: flex;
-  align-items: center;
-  color: white;
 }

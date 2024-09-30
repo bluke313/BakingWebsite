@@ -1,12 +1,15 @@
 import './Components.css';
 import { useState } from 'react';
-import sample from './images/sample.png'
-import sample2 from './images/sample2.jpg'
 
 export const Link = (props) => {
     return (
         <div className="Container">
-            <a className="Link-button" href={props.href} id={props.id}>{props.text}</a>
+            <a
+                className="Link-button"
+                href={props.href}
+                id={props.id}
+                target={props.target}
+            >{props.text}</a>
         </div>
     );
 }
@@ -32,8 +35,21 @@ export const TextDivider = (props) => {
 }
 
 export const Image = (props) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
+
     return (
-        <div style={props.style}>
+        <div
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                transform: isHovered ? `scale(${props.scaleFactor})` : 'scale(1)', // Scale up on hover
+                transition: 'transform 0.3s ease', // Smooth transition
+                margin: '0px 20px 10px 20px'
+            }}
+            className='Image'>
             <svg width={300 * props.scale} height={400 * props.scale}>
                 <defs>
                     <pattern id={props.id} patternUnits="userSpaceOnUse" width="300" height="400">
@@ -43,7 +59,8 @@ export const Image = (props) => {
                 <g transform={`scale(${props.scale})`}>
                     <rect x="10" y="10" width="280" height="380" rx="110" ry="110" fill={`url(#${props.id})`} stroke="white" strokeWidth="2" />
                     <text x={`${50 / props.scale}%`} y={`${35 / props.scale}%`} fill="white" fontSize="24" textAnchor="middle" alignmentBaseline="middle">
-                        {props.title}
+                        <tspan x={`${50 / props.scale}%`} dy="0"> {props.titleLine1} </tspan>
+                        <tspan x={`${50 / props.scale}%`} dy="1.6em"> {props.titleLine2} </tspan>
                     </text>
                     <text x={`${50 / props.scale}%`} y={`${50 / props.scale}%`} fill="white" fontSize="16" textAnchor="middle" alignmentBaseline="top">
                         <tspan x={`${50 / props.scale}%`} dy="0"> {props.captionLine1} </tspan>
@@ -66,10 +83,13 @@ export const Season = (props) => {
                     {props.items.map((elem, i) => {
                         return (
                             <Image
+                                key={i}
                                 id={`${elem.name}-${i}`}
                                 href={elem.imageURL}
                                 scale={1}
-                                style={{ padding: '0px 20px 10px 20px' }}
+                                scaleFactor={1.047}
+                                titleLine1={elem.titleLine1}
+                                titleLine2={elem.titleLine2}
                             />
                         )
                     })}
@@ -77,5 +97,17 @@ export const Season = (props) => {
             </div>
             <div style={{ height: '10vh' }} />
         </div>
+    )
+}
+
+export const Footer = () => {
+
+    return (
+        <footer className="Footer">
+            <div className="Quarter-div"><h1>Find us here</h1><p>hello@reallygreatsite.com</p></div>
+            <div className="Quarter-div"><p>512 Covington Terrace</p></div>
+            <div className="Quarter-div">Casey's Cookies</div>
+            <div className="Quarter-div">test</div>
+        </footer>
     )
 }

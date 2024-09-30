@@ -1,10 +1,12 @@
 import snowflake from './snowflake.svg'
 import sample from './images/sample.png'
 import sample2 from './images/sample2.jpg'
+import CaramelPeanutButterBars from './images/CaramelPeanutButterBars300x400.png'
+import logo from './images/caseysLogo.png'
 import { fallItems, winterItems, springItems, summerItems } from './Items.js';
 import './Home.css';
 import { useState, useEffect } from 'react';
-import { Link, Divider, TextDivider, Image, Season } from './Components.js'
+import { Link, Divider, TextDivider, Image, Season, Footer } from './Components.js'
 
 const Home = () => {
   const [categoryVisisble, setCategoryVisible] = useState(false);
@@ -13,7 +15,7 @@ const Home = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
-    if (scrollPosition > 500) {
+    if (scrollPosition > 1000) {
       setReturnVisible(true);
     }
     else {
@@ -32,20 +34,14 @@ const Home = () => {
   return (
     <div className="App">
 
-      <a
-        className={`Return-button ${returnVisible ? 'show' : ''}`}
-        href="#App-header"
-      >
-        &#x2191;
-      </a>
-
       <header id="App-header">
-        <Link text="Menu" href="" /><TextDivider />
-        <Link text="Fall" href="" /><TextDivider />
-        <Link text="Winter" href="" /><TextDivider />
-        <Link text="Spring" href="" /><TextDivider />
-        <Link text="Summer" href="" /><TextDivider />
-        <Link text="About" href="#About" />
+        <Link text="Home" href="/" /><TextDivider />
+        <Link text="Fall" href="/Fall" /><TextDivider />
+        <Link text="Winter" href="/Winter" /><TextDivider />
+        <Link text="Spring" href="/Spring" /><TextDivider />
+        <Link text="Summer" href="/Summer" /><TextDivider />
+        <Link text="About" href="/#About" /><TextDivider />
+        <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank"/>
       </header>
 
       <Divider />
@@ -54,13 +50,13 @@ const Home = () => {
         <Image
           id="sample2"
           href={sample2} 
-          scale={1}
+          scale={1.75}
         />
-
+        <img src={logo} style={{width: '660px', height: '700px', objectFit: 'cover'}}/>
         <Image
           id="sample2"
           href={sample2}
-          scale={1}
+          scale={1.75}
         />
       </div>
 
@@ -88,12 +84,14 @@ const Home = () => {
         <div className="Thirds">
           <div className="Third-div">
             <Image
-              id="sample2"
-              href={sample2}
+              id="CaramelPeanutButterBars"
+              href={CaramelPeanutButterBars}
               scale={1.5}
-              title="Pasteries"
-              captionLine1="Heavenly pastry creations"
-              captionLine2="that will satisfy your cravings"
+              scaleFactor={1.1}
+              titleLine1="Caramel Peanut"
+              titleLine2="Butter Bars"
+              // captionLine1="Heavenly pastry creations"
+              // captionLine2="that will satisfy your cravings"
             />
           </div>
           <div className="Third-div">
@@ -101,9 +99,9 @@ const Home = () => {
               id="sample2"
               href={sample2}
               scale={1.5}
-              title="Cookies"
-              captionLine1="Deliciously decadent cookies"
-              captionLine2="that are sure to impress"
+              // title="Cookies"
+              // captionLine1="Deliciously decadent cookies"
+              // captionLine2="that are sure to impress"
             />
           </div>
           <div className="Third-div">
@@ -111,9 +109,9 @@ const Home = () => {
               id="sample2"
               href={sample2}
               scale={1.5}
-              title="Breads"
-              captionLine1="Freshly-baked loaves of bread"
-              captionLine2="you'll find irresistible"
+              // title="Breads"
+              // captionLine1="Freshly-baked loaves of bread"
+              // captionLine2="you'll find irresistible"
             />
           </div>
         </div>
@@ -130,12 +128,14 @@ const Home = () => {
         <h1>ABOUT</h1>
       </div>
 
-      <footer className="Footer">
-        <div className="Quarter-div"><h1>Find us here</h1><p>hello@reallygreatsite.com</p></div>
-        <div className="Quarter-div"><p>512 Covington Terrace</p></div>
-        <div className="Quarter-div">Casey's Cookies</div>
-        <div className="Quarter-div">test</div>
-      </footer>
+      <Footer />
+
+      <a
+        className={`Return-button ${returnVisible ? 'show' : ''}`}
+        href="#App-header"
+      >
+        &#x2191;
+      </a>
 
     </div>
   );

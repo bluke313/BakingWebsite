@@ -3,6 +3,12 @@ html {
     color: white;
 }
 
+.App {
+    text-align: center;
+    background-color: #c46e08;
+    font-family: 'Playwrite DE Grund', sans-serif;
+}
+
 ::-webkit-scrollbar {
     width: 16px;
 }

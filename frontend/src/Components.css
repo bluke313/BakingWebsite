@@ -50,8 +50,17 @@
     display: flex;
     flex-direction: row;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .Season-container::-webkit-scrollbar-track {
     border-radius: 5px;
 }
+
+.Footer {
+    max-height: 14vh;
+    background-color: #9d5425;
+    display: flex;
+    align-items: center;
+    color: white;
+  }

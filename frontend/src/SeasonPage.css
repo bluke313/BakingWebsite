@@ -1,0 +1,17 @@
+#SeasonPage {
+    justify-content: center;
+    background-color: #c46e08;
+    min-height: 100vh;
+    font-family: 'Playwrite DE Grund', sans-serif;
+}
+
+#Title {
+    color: white;
+    text-align: center;
+}
+
+#Item-map {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
