@@ -2,6 +2,9 @@ import snowflake from './snowflake.svg'
 import sample from './images/sample.png'
 import sample2 from './images/sample2.jpg'
 import CaramelPeanutButterBars from './images/CaramelPeanutButterBars300x400.png'
+import CaramelPeanutButterBarsFull from './images/CaramelPeanutButterBars.jpg'
+import PumpkinBars from './images/PumpkinBars.jpg'
+
 import logo from './images/caseysLogo.png'
 import { fallItems, winterItems, springItems, summerItems } from './Items.js';
 import './Home.css';
@@ -9,25 +12,34 @@ import { useState, useEffect } from 'react';
 import { Link, Divider, TextDivider, Image, Season, Footer } from './Components.js'
 
 const Home = () => {
-  const [categoryVisisble, setCategoryVisible] = useState(false);
   const [returnVisible, setReturnVisible] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-
-    if (scrollPosition > 1000) {
-      setReturnVisible(true);
-    }
-    else {
-      setReturnVisible(false);
-    }
-  };
+  const featured = [fallItems[0], fallItems[1]]
 
   useEffect(() => {
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollPosition > 1000) {
+        setReturnVisible(true);
+      }
+      else {
+        setReturnVisible(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -41,7 +53,7 @@ const Home = () => {
         <Link text="Spring" href="/Spring" /><TextDivider />
         <Link text="Summer" href="/Summer" /><TextDivider />
         <Link text="About" href="/#About" /><TextDivider />
-        <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank"/>
+        <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" />
       </header>
 
       <Divider />
@@ -49,14 +61,16 @@ const Home = () => {
       <div id="Title-section">
         <Image
           id="sample2"
-          href={sample2} 
-          scale={1.75}
+          href={sample2}
+          scale={windowWidth / 1100}
+          clickable={false}
         />
-        <img src={logo} style={{width: '660px', height: '700px', objectFit: 'cover'}}/>
+        <img src={logo} style={{ width: '40%', maxHeight: '710px', objectFit: 'cover' }} />
         <Image
           id="sample2"
           href={sample2}
-          scale={1.75}
+          scale={windowWidth / 1100}
+          clickable={false}
         />
       </div>
 
@@ -66,14 +80,15 @@ const Home = () => {
         <div className="Half-div">
           <div id="Sect1TextContainer">
             <embed src={snowflake} type="image/svg+xml" width="30" />
-            <h1>Pastry Perfection</h1>
-            <p>Discover deliciousness at Chervet Bakery. Imagine biting into a freshly baked treat that's made with love and handled with care.</p>
-            <p>No need to imagine, because our pastries are baked, packed, and delivered on the day they're made, so you're assured of oven-fresh goodness.</p>
-            <p>Now that's perfection. </p>
+            <h1>Welcome to Casey’s!</h1>
+            <p>Welcome to Casey’s, a pet project started by two brothers to show their love and appreciation for everything their mother has done for both her family and her community. Our mother, Casey, is a pediatrician by profession and an enthusiastic baking hobbyist. At home, we are blessed to be surrounded by the love and care she puts into her baking and everything else she does. We hope that you enjoy browsing our mother’s handcrafted creations and feel inspired to try them out for yourself!
+            </p>
+            <p></p>
+            <p></p>
           </div>
         </div>
         <div className="Half-div">
-          <img id="Section1Img" src={sample2} width="95%" height="500" />
+          <img id="Section1Img" src={CaramelPeanutButterBarsFull} style={{ width: '80%', borderStyle: 'solid', borderRadius: '100px', borderColor: 'maroon', borderWidth: '5px' }} />
         </div>
       </div>
 
@@ -82,38 +97,65 @@ const Home = () => {
       <div id="Section-2">
         <h1>Featured</h1>
         <div className="Thirds">
-          <div className="Third-div">
+          {featured.map((elem, i) => {
+            return (
+              <div className="Third-div">
+                <Image
+                  key={i}
+                  id={`${elem.name}-${i}`}
+                  href={elem.imageURL}
+                  scale={windowWidth / 1300}
+                  scaleFactor={1.1}
+                  titleLine1={elem.titleLine1}
+                  titleLine2={elem.titleLine2}
+                  fullImage={elem.fullImage}
+                  seasons={elem.seasons}
+                  descriptionParagraph1={elem.descriptionParagraph1}
+                  descriptionParagraph2={elem.descriptionParagraph2}
+                />
+              </div>
+            )
+          })}
+
+          {/* <div className="Third-div">
             <Image
               id="CaramelPeanutButterBars"
               href={CaramelPeanutButterBars}
-              scale={1.5}
+              fullImage={CaramelPeanutButterBarsFull}
+              scale={windowWidth / 1300}
               scaleFactor={1.1}
               titleLine1="Caramel Peanut"
               titleLine2="Butter Bars"
-              // captionLine1="Heavenly pastry creations"
-              // captionLine2="that will satisfy your cravings"
+              seasons="Any"
+              descriptionParagraph1="These irresistible caramel-peanut butter chocolate chip cookie bars are an instant favorite. A chewy chocolate chip cookie base cradles creamy peanut butter and decadent caramel woven between half baked chocolate chip cookie dough."
+              descriptionParagraph2="Stored and served at room temperature, this dessert retains its soft and gooey nature. Reheat and serve warm for that authentic fresh baked experience every time!"
+            // captionLine1="Heavenly pastry creations"
+            // captionLine2="that will satisfy your cravings"
+            />
+          </div>
+          <div className="Third-div">
+            <Image
+              id="PumpkinBars"
+              href={PumpkinBars}
+              fullImage={PumpkinBars}
+              titleLine1="Pumpkin Bars"
+              titleLine2=""
+              scale={windowWidth / 1300}
+              scaleFactor={1.1}
+              seasons="Any"
+              descriptionParagraph1="This is paragraph 1"
+              descriptionParagraph2="This is paragraph 2"
             />
           </div>
           <div className="Third-div">
             <Image
               id="sample2"
               href={sample2}
-              scale={1.5}
-              // title="Cookies"
-              // captionLine1="Deliciously decadent cookies"
-              // captionLine2="that are sure to impress"
+              scale={windowWidth / 1300}
+              scaleFactor={1.1}
+              titleLine1="Placeholder"
             />
-          </div>
-          <div className="Third-div">
-            <Image
-              id="sample2"
-              href={sample2}
-              scale={1.5}
-              // title="Breads"
-              // captionLine1="Freshly-baked loaves of bread"
-              // captionLine2="you'll find irresistible"
-            />
-          </div>
+          </div> */}
         </div>
       </div>
 

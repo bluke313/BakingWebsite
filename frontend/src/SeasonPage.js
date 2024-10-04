@@ -26,6 +26,10 @@ const SeasonPage = (props) => {
                             scaleFactor={1.1}
                             titleLine1={elem.titleLine1}
                             titleLine2={elem.titleLine2}
+                            fullImage={elem.fullImage}
+                            seasons={elem.seasons}
+                            descriptionParagraph1={elem.descriptionParagraph1}
+                            descriptionParagraph2={elem.descriptionParagraph2}
                         />
                     )
                 })}
