@@ -68,11 +68,11 @@ app.get('/summer', (req, res) => {
 
 app.put('/update-item', (req, res) => {
     console.log('Update-item request: ', req.body)
-    const { id, newName, title1, title2, fall, winter, spring, summer } = req.body;
+    const { id, newName, title1, title2, description1, description2, fall, winter, spring, summer } = req.body;
 
-    const sql = 'UPDATE items SET name = ?, titleLine1 = ?, titleLine2 = ?, fall = ?, winter = ?, spring = ?, summer = ? WHERE id = ?';
+    const sql = 'UPDATE items SET name = ?, titleLine1 = ?, titleLine2 = ?, descriptionParagraph1 = ?, descriptionParagraph2 = ?, fall = ?, winter = ?, spring = ?, summer = ? WHERE id = ?';
 
-    db.run(sql, [newName, title1, title2, fall, winter, spring, summer, id], function (err) {
+    db.run(sql, [newName, title1, title2, description1, description2, fall, winter, spring, summer, id], function (err) {
         if (err) {
             console.log( err );
             return res.status(500).json({ error: err.message });

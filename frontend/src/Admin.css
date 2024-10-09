@@ -47,8 +47,23 @@
 .Admin-overlay-content {
     background-color: white;
     color: black;
+    width: 25%;
+    height: 70%;
     padding: 20px;
     cursor: default;
+    margin-right: 10%;
+    position: relative;
+    overflow-y: auto;
+}
+
+.Admin-overlay-preview {
+    background-color: white;
+    width: 25%;
+    height: 70%;
+    color: black;
+    padding: 20px;
+    position: relative;
+    overflow-y: auto;
 }
 
 .Input-row {
@@ -56,7 +71,33 @@
     margin-bottom: 5px;
 }
 
+.Input-row textarea {
+    width: 300px;
+    height: auto;
+    min-height: 100px;
+    resize: none;
+}
+
 .Input-title {
     margin: 0px;
     margin-right: 5px;
+}
+
+#Exit-button {
+    background-color: rgb(255, 152, 152);
+    border-radius: 10px;
+    font-size: large;
+}
+
+#Save-button {
+    background-color: rgb(143, 255, 143);
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: large;
+}
+
+.Admin-overlay h1 {
+    text-align: center;
 }

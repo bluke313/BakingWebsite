@@ -42,7 +42,7 @@ export const Image = (props) => {
     const handleMouseLeave = () => setIsHovered(false);
 
     const handleImageClick = () => {
-        if (props.clickable != false) {
+        if (props.clickable !== false) {
             setIsOverlayVisible(true);
         }
     }
@@ -89,9 +89,9 @@ export const Image = (props) => {
                         {/* Customize the overlay content as needed */}
                         <h1>{`${props.titleLine1} ${props.titleLine2}`}</h1>
                         <div className="Overlay-content-container">
-                            <img id={`${props.titleLine1} ${props.titleLine2}.full`} src={props.fullImage} height="600px" style={{margin: '10px'}}/>
+                            <img id={`${props.titleLine1} ${props.titleLine2}.full`} src={props.fullImage} height="600px" style={{margin: '10px'}} alt={props.name}/>
                             <div className="Overlay-text" style={{width: "400px"}}>
-                                <p>{`Seasons: ${props.seasons}`}</p>
+                                <p>{props.seasons}</p>
                                 <p>{props.descriptionParagraph1}</p>
                                 <p>{props.descriptionParagraph2}</p>
                             </div>
