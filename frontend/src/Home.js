@@ -47,13 +47,18 @@ const Home = () => {
     <div className="App">
 
       <header id="App-header">
-        <Link text="Home" href="/" /><TextDivider />
-        <Link text="Fall" href="/Fall" /><TextDivider />
-        <Link text="Winter" href="/Winter" /><TextDivider />
-        <Link text="Spring" href="/Spring" /><TextDivider />
-        <Link text="Summer" href="/Summer" /><TextDivider />
-        <Link text="About" href="/#About" /><TextDivider />
-        <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" />
+        <div className="App-header-text">
+          <Link text="Home" href="/" /><TextDivider />
+          <Link text="Fall" href="/Fall" /><TextDivider />
+          <Link text="Winter" href="/Winter" /><TextDivider />
+          <Link text="Spring" href="/Spring" /><TextDivider />
+          <Link text="Summer" href="/Summer" /><TextDivider />
+          <Link text="About" href="/#About" /><TextDivider />
+          <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" />
+        </div>
+        <div>
+          <Link text="Admin" href="/Admin" style={{}} />
+        </div>
       </header>
 
       <Divider />
@@ -116,46 +121,6 @@ const Home = () => {
               </div>
             )
           })}
-
-          {/* <div className="Third-div">
-            <Image
-              id="CaramelPeanutButterBars"
-              href={CaramelPeanutButterBars}
-              fullImage={CaramelPeanutButterBarsFull}
-              scale={windowWidth / 1300}
-              scaleFactor={1.1}
-              titleLine1="Caramel Peanut"
-              titleLine2="Butter Bars"
-              seasons="Any"
-              descriptionParagraph1="These irresistible caramel-peanut butter chocolate chip cookie bars are an instant favorite. A chewy chocolate chip cookie base cradles creamy peanut butter and decadent caramel woven between half baked chocolate chip cookie dough."
-              descriptionParagraph2="Stored and served at room temperature, this dessert retains its soft and gooey nature. Reheat and serve warm for that authentic fresh baked experience every time!"
-            // captionLine1="Heavenly pastry creations"
-            // captionLine2="that will satisfy your cravings"
-            />
-          </div>
-          <div className="Third-div">
-            <Image
-              id="PumpkinBars"
-              href={PumpkinBars}
-              fullImage={PumpkinBars}
-              titleLine1="Pumpkin Bars"
-              titleLine2=""
-              scale={windowWidth / 1300}
-              scaleFactor={1.1}
-              seasons="Any"
-              descriptionParagraph1="This is paragraph 1"
-              descriptionParagraph2="This is paragraph 2"
-            />
-          </div>
-          <div className="Third-div">
-            <Image
-              id="sample2"
-              href={sample2}
-              scale={windowWidth / 1300}
-              scaleFactor={1.1}
-              titleLine1="Placeholder"
-            />
-          </div> */}
         </div>
       </div>
 

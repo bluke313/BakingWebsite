@@ -32,12 +32,18 @@
 
 #App-header {
   background-color: #c46e08;
-  text-align: left;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding-top: 2vh;
   padding-left: 4%;
   padding-right: 5%;
+}
+
+.App-header-text {
+  text-align: left;
+  display: flex;
+  flex-direction: row;
 }
 
 #Title-section {

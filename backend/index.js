@@ -5,6 +5,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors());
+app.use(express.json());
 
 // Connect to database
 const db = new sqlite3.Database('./mydb.db', (err) => {
@@ -19,7 +20,6 @@ app.get('/all', (req, res) => {
     db.all('SELECT * FROM items', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
-            console.log({ error: err.message })
             return;
         }
         res.json({ data: rows })
@@ -63,6 +63,23 @@ app.get('/summer', (req, res) => {
             return;
         }
         res.json({ data: rows })
+    });
+});
+
+app.put('/update-item', (req, res) => {
+    console.log('Update-item request: ', req.body)
+    const { id, newName, title1, title2, fall, winter, spring, summer } = req.body;
+
+    const sql = 'UPDATE items SET name = ?, titleLine1 = ?, titleLine2 = ?, fall = ?, winter = ?, spring = ?, summer = ? WHERE id = ?';
+
+    db.run(sql, [newName, title1, title2, fall, winter, spring, summer, id], function (err) {
+        if (err) {
+            console.log( err );
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({
+            message: 'Items updated successfully',
+        });
     });
 });
 
