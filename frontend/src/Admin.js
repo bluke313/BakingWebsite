@@ -107,6 +107,52 @@ const AdminImage = (props) => {
         }
     };
 
+    const handleDelete = async () => {
+        const userResponse = window.confirm("Are you sure? This permanently delete the item.");
+        if (userResponse) {
+            const response = await fetch('http://localhost:3001/delete-item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: props.id,
+                }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert('Item deleted successfully!');
+                props.refreshData();
+            } else {
+                alert(`Error: ${data.error}`);
+            }
+        }
+    };
+
+    const handlePublish = async () => {
+        const userResponse = window.confirm("Are you sure? This will make the item viewable on the website.");
+        if (userResponse) {
+            const response = await fetch('http://localhost:3001/publish-item', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: props.id,
+                }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert('Item published successfully!');
+                props.refreshData();
+            } else {
+                alert(`Error: ${data.error}`);
+            }
+        }
+    };
+
     return (
         <div>
             <div
@@ -175,7 +221,10 @@ const AdminImage = (props) => {
                                 onChange={handleSummerChange}
                             />
                             </div>
-                            <button id="Save-button" onClick={handleUpdate}>Save</button>
+                            <button id="Delete-button" onClick={handleDelete}>Delete</button>
+                            {props.isPublished === 1 ?
+                                <button id="Save-button" onClick={handleUpdate}>Save</button> :
+                                <button id="Save-button" onClick={handlePublish}>Publish</button>}
                         </div>
                     </div>
                     <div className="Admin-overlay-preview">
@@ -203,13 +252,19 @@ const AdminImage = (props) => {
 }
 
 export const Admin = () => {
-    const [data, setData] = useState([]);
+    const [items, setItems] = useState([]);
+    const [drafts, setDrafts] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:3001/all')
+        fetch('http://localhost:3001/published')
             .then((response) => response.json())
-            .then((data) => setData(data.data))
+            .then((data) => setItems(data.data))
+            .catch((error) => console.error('Error fetching data:', error));
+
+        fetch('http://localhost:3001/drafts')
+            .then((response) => response.json())
+            .then((data) => setDrafts(data.data))
             .catch((error) => console.error('Error fetching data:', error));
     }, [refreshData]);
 
@@ -217,13 +272,32 @@ export const Admin = () => {
         setRefreshData(prev => !prev);
     };
 
+    const handleNew = async (event) => {
+        event.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:3001/new-draft', { method: 'POST' });
+        } catch (error) {
+            console.error("Error creating new draft: ", error);
+        }
+        
+        fetchData();
+    };
+
     return (
         <div id="Admin">
             <div id="Admin-header">
                 <Link text="&#x2190; Home" href="/" />
             </div>
-            <div id="Admin-container">
-                {data.map((item) => (
+
+            <svg width="100%" height="3" >
+                <rect x="1%" y='0' width="98%" height="3" fill="black" />
+            </svg>
+
+            <h1 className="Admin-title">Drafts</h1>
+            <div id="Admin-drafts">
+                <div id="New-button" onClick={handleNew}>+<div style={{ width: "100%", height: "25px" }} /></div>
+                {drafts.map((item) => (
                     <AdminImage
                         refreshData={fetchData}
                         key={item.id}
@@ -241,6 +315,36 @@ export const Admin = () => {
                         summer={item.summer}
                         descriptionParagraph1={item.descriptionParagraph1}
                         descriptionParagraph2={item.descriptionParagraph2}
+                        isPublished={item.isPublished}
+                    />
+                ))}
+            </div>
+
+            <svg width="100%" height="3" >
+                <rect x="1%" y='0' width="98%" height="3" fill="black" />
+            </svg>
+
+            <h1 className="Admin-title">Items</h1>
+            <div id="Admin-items">
+                {items.map((item) => (
+                    <AdminImage
+                        refreshData={fetchData}
+                        key={item.id}
+                        id={item.id}
+                        name={item.name}
+                        href={testImage}
+                        scale={1}
+                        scaleFactor={1.1}
+                        titleLine1={item.titleLine1}
+                        titleLine2={item.titleLine2}
+                        fullImage={testImage}
+                        fall={item.fall}
+                        winter={item.winter}
+                        spring={item.spring}
+                        summer={item.summer}
+                        descriptionParagraph1={item.descriptionParagraph1}
+                        descriptionParagraph2={item.descriptionParagraph2}
+                        isPublished={item.isPublished}
                     />
                 ))}
             </div>

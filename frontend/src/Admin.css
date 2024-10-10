@@ -10,11 +10,18 @@
     padding-right: 5%;
 }
 
-#Admin-container {
+#Admin-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    margin: 50px 100px 10px 100px;
+    margin: 0px 50px 10px 50px;
+}
+
+#Admin-drafts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin: 0px 50px 10px 50px;
 }
 
 .Admin-image {
@@ -25,7 +32,8 @@
     border-color: black;
     border-width: 1px;
     margin: 10px;
-    max-width: 150px;
+    width: 150px;
+    height: 240px;
     background-color: rgb(59, 59, 59);
 }
 
@@ -98,6 +106,42 @@
     font-size: large;
 }
 
+#Delete-button {
+    background-color: rgb(255, 152, 152);
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: large;
+}
+
 .Admin-overlay h1 {
     text-align: center;
+}
+
+.Admin-title {
+    margin-left: 80px;
+    color: black;
+}
+
+#New-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    color: black;
+    user-select: none;
+    cursor: pointer;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    margin: 10px;
+    width: 150px;
+    height: 240px;
+    background-color: rgb(179, 179, 179);
+}
+
+#New-button:hover {
+    background-color: lightgray;
 }
