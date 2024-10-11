@@ -1,11 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const multer = require('multer');
+const path = require('path');
+
 const app = express();
 const port = 3001;
-
-app.use(cors());
 app.use(express.json());
+app.use(cors());
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage });
 
 // Connect to database
 const db = new sqlite3.Database('./mydb.db', (err) => {
@@ -76,12 +88,30 @@ app.get('/summer', (req, res) => {
     });
 });
 
-app.put('/update-item', (req, res) => {
+app.put('/update-item', upload.single('image'), (req, res) => {
+
+    console.log(req.body);
+    console.log(req.file);
+
     const { id, newName, title1, title2, description1, description2, fall, winter, spring, summer } = req.body;
+    const imagePath = req.file ? req.file.path : null;
 
-    const sql = 'UPDATE items SET name = ?, titleLine1 = ?, titleLine2 = ?, descriptionParagraph1 = ?, descriptionParagraph2 = ?, fall = ?, winter = ?, spring = ?, summer = ? WHERE id = ?';
+    const sql = `
+        UPDATE items 
+        SET name = ?, 
+            titleLine1 = ?, 
+            titleLine2 = ?, 
+            descriptionParagraph1 = ?, 
+            descriptionParagraph2 = ?, 
+            fall = ?, 
+            winter = ?, 
+            spring = ?, 
+            summer = ?,
+            imagePath = ?
+        WHERE id = ?
+    `;
 
-    db.run(sql, [newName, title1, title2, description1, description2, fall, winter, spring, summer, id], function (err) {
+    db.run(sql, [newName, title1, title2, description1, description2, fall, winter, spring, summer, imagePath, id], function (err) {
         if (err) {
             console.log( err );
             return res.status(500).json({ error: err.message });

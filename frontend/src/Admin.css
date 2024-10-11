@@ -14,14 +14,14 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    margin: 0px 50px 10px 50px;
+    padding: 0px 50px 100px 50px;
 }
 
 #Admin-drafts {
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    margin: 0px 50px 10px 50px;
+    padding: 0px 50px 10px 50px;
 }
 
 .Admin-image {
@@ -106,6 +106,15 @@
     font-size: large;
 }
 
+#Publish-button {
+    background-color: rgb(143, 255, 143);
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 85px;
+    font-size: large;
+}
+
 #Delete-button {
     background-color: rgb(255, 152, 152);
     border-radius: 10px;
@@ -144,4 +153,15 @@
 
 #New-button:hover {
     background-color: lightgray;
+}
+
+#Preview-image {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: auto;
+    position: absolute;
+    bottom: 50px;
+    right: 100px;
+    align-items: center;
 }

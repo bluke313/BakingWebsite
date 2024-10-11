@@ -20,6 +20,9 @@ const AdminImage = (props) => {
     const [spring, setSpring] = useState(intToBool(props.spring));
     const [summer, setSummer] = useState(intToBool(props.summer));
 
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+
     const seasonsToString = (fall, winter, spring, summer) => {
 
         // eslint-disable-next-line
@@ -78,23 +81,23 @@ const AdminImage = (props) => {
     const handleUpdate = async () => {
         const userResponse = window.confirm("Are you sure? This will overwrite previous data.");
         if (userResponse) {
+
+            const formData = new FormData();
+            formData.append('id', props.id);
+            formData.append('image', selectedImage);
+            formData.append('newName', name);
+            formData.append('title1', title1);
+            formData.append('title2', title2);
+            formData.append('description1', description1);
+            formData.append('description2', description2);
+            formData.append('fall', boolToInt(fall));
+            formData.append('winter', boolToInt(winter));
+            formData.append('spring', boolToInt(spring));
+            formData.append('summer', boolToInt(summer));
+            
             const response = await fetch('http://localhost:3001/update-item', {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: props.id,
-                    newName: name,
-                    title1: title1,
-                    title2: title2,
-                    description1: description1,
-                    description2: description2,
-                    fall: boolToInt(fall),
-                    winter: boolToInt(winter),
-                    spring: boolToInt(spring),
-                    summer: boolToInt(summer),
-                }),
+                body: formData,
             });
 
             const data = await response.json();
@@ -151,6 +154,22 @@ const AdminImage = (props) => {
                 alert(`Error: ${data.error}`);
             }
         }
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]; // Get the first selected file
+        setSelectedImage(file);
+
+        // Preview the image (optional)
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreviewUrl(reader.result); // Set preview URL
+            };
+            reader.readAsDataURL(file); // Convert file to base64 string for preview
+        }
+
+        setSelectedImage(file); // Store the selected file
     };
 
     return (
@@ -221,10 +240,21 @@ const AdminImage = (props) => {
                                 onChange={handleSummerChange}
                             />
                             </div>
+                            {imagePreviewUrl &&
+                                <div id="Preview-image">
+                                    <img src={imagePreviewUrl} alt="Preview" style={{ width: '100px' }} />
+                                    <button onClick={() => { setImagePreviewUrl(null); setSelectedImage(null) }} style={{ width: '80%', marginTop: '5px' }} >Delete</button>
+                                </div>}
+                            <div className="Input-row" id="Image-input"><p className="Input-title">photo:</p><input
+                                type='file'
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
+                            </div>
                             <button id="Delete-button" onClick={handleDelete}>Delete</button>
-                            {props.isPublished === 1 ?
-                                <button id="Save-button" onClick={handleUpdate}>Save</button> :
-                                <button id="Save-button" onClick={handlePublish}>Publish</button>}
+
+                            <button id="Save-button" onClick={handleUpdate}>Save</button>
+                            {props.isPublished === 0 && <button id="Publish-button" onClick={handlePublish}>Publish</button>}
                         </div>
                     </div>
                     <div className="Admin-overlay-preview">
@@ -280,7 +310,7 @@ export const Admin = () => {
         } catch (error) {
             console.error("Error creating new draft: ", error);
         }
-        
+
         fetchData();
     };
 
