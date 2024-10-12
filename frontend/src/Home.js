@@ -15,7 +15,7 @@ const Home = () => {
   const [summerItems, setSummerItems] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
 
-  const sample2 = "images/sample2.jpg";
+  const sample2 = "http://localhost:3001/images/sample2.jpg";
 
   useEffect(() => {
 
@@ -34,6 +34,10 @@ const Home = () => {
     fetch('http://localhost:3001/summer')
       .then((response) => response.json())
       .then((data) => setSummerItems(data.data))
+      .catch((error) => console.error('Error fetching data:', error));
+    fetch('http://localhost:3001/featured')
+      .then((response) => response.json())
+      .then((data) => setFeaturedItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
 
     const handleResize = () => {
@@ -84,14 +88,14 @@ const Home = () => {
       <div id="Title-section">
         <Image
           id="sample2"
-          imagePath={sample2}
+          imageUrl={sample2}
           scale={windowWidth / 1100}
           clickable={false}
         />
         <img src={logo} style={{ width: '40%', maxHeight: '710px', objectFit: 'cover' }} />
         <Image
           id="sample2"
-          imagePath={sample2}
+          imageUrl={sample2}
           scale={windowWidth / 1100}
           clickable={false}
         />
@@ -120,14 +124,14 @@ const Home = () => {
       <div id="Section-2">
         <h1>Featured</h1>
         <div className="Thirds">
-          {fallItems.map((elem, i) => {
+          {featuredItems.map((elem, i) => {
             return (
               <div className="Third-div">
                 <Image
                   key={i}
                   id={elem.id}
                   name={elem.name}
-                  imagePath={elem.imagePath}
+                  imageUrl={elem.imageUrl}
                   scale={windowWidth / 1300}
                   scaleFactor={1.1}
                   titleLine1={elem.titleLine1}
@@ -135,6 +139,7 @@ const Home = () => {
                   seasons={seasonsToString(elem.fall, elem.winter, elem.spring, elem.summer)}
                   descriptionParagraph1={elem.descriptionParagraph1}
                   descriptionParagraph2={elem.descriptionParagraph2}
+                  publishedDate={elem.publishedDate}
                 />
               </div>
             )

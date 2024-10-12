@@ -19,11 +19,10 @@ const AdminImage = (props) => {
     const [winter, setWinter] = useState(intToBool(props.winter));
     const [spring, setSpring] = useState(intToBool(props.spring));
     const [summer, setSummer] = useState(intToBool(props.summer));
-
-    const imageUrl = `http://localhost:3001/${props.imagePath}`;
+    const [isFeatured, setIsFeatured] = useState(intToBool(props.isFeatured));
 
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(null);    
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(props.imageUrl);    
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
@@ -43,7 +42,8 @@ const AdminImage = (props) => {
         setSpring(intToBool(props.spring));
         setSummer(intToBool(props.summer));
         setSelectedImage(null);
-        setImagePreviewUrl(null);
+        setImagePreviewUrl(props.imageUrl);
+        setIsFeatured(intToBool(props.isFeatured));
     };
 
     const handleNameChange = (event) => { setName(event.target.value) };
@@ -55,6 +55,7 @@ const AdminImage = (props) => {
     const handleWinterChange = (event) => { setWinter(event.target.checked) };
     const handleSpringChange = (event) => { setSpring(event.target.checked) };
     const handleSummerChange = (event) => { setSummer(event.target.checked) };
+    const handleIsFeaturedChange = (event) => { setIsFeatured(event.target.checked) };
 
     const handleUpdate = async () => {
         const userResponse = window.confirm("Are you sure? This will overwrite previous data.");
@@ -72,6 +73,7 @@ const AdminImage = (props) => {
             formData.append('winter', boolToInt(winter));
             formData.append('spring', boolToInt(spring));
             formData.append('summer', boolToInt(summer));
+            formData.append('isFeatured', boolToInt(isFeatured));
             
             const response = await fetch('http://localhost:3001/update-item', {
                 method: 'PUT',
@@ -134,6 +136,29 @@ const AdminImage = (props) => {
         }
     };
 
+    const handleUnpublish = async () => {
+        const userResponse = window.confirm("Are you sure? This will remove the item from the website.");
+        if (userResponse) {
+            const response = await fetch('http://localhost:3001/unpublish-item', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: props.id,
+                }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert('Item published successfully!');
+                props.refreshData();
+            } else {
+                alert(`Error: ${data.error}`);
+            }
+        }
+    };
+
     const [imgWidth, setImgWidth] = useState(0);
 
     const handleImageChange = (e) => {
@@ -162,9 +187,9 @@ const AdminImage = (props) => {
             <div
                 onClick={handleImageClick}
                 className='Admin-image'>
-                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad}/>
+                <img src={props.imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad}/>
                 <svg width={150} height={200}>
-                    <image href={imageUrl} height="200" x={ (150 - imgWidth) / 2 }/>
+                    <image href={props.imageUrl} height="200" x={ (150 - imgWidth) / 2 }/>
                 </svg>
                 {props.name}
             </div>
@@ -172,9 +197,15 @@ const AdminImage = (props) => {
                 <div className="Admin-overlay">
                     <div className="Admin-overlay-content">
                         <button id="Exit-button" onClick={handleClose}>Exit</button>
-                        <h1>{`${props.titleLine1} ${props.titleLine2}`}</h1>
+                        <h1>{props.name}</h1>
                         <div className="Admin-overlay-content-container">
                             <p className="Input-title">id: {props.id}</p>
+                            {props.isPublished === 1 && <div className="Input-row"><p className="Input-title">featured:</p><input
+                                type='checkbox'
+                                checked={isFeatured}
+                                onChange={handleIsFeaturedChange}
+                            />
+                            </div>}
                             <div className="Input-row"><p className="Input-title">name:</p><input
                                 type='text'
                                 value={name}
@@ -226,11 +257,11 @@ const AdminImage = (props) => {
                                 onChange={handleSummerChange}
                             />
                             </div>
-                            {imagePreviewUrl &&
+                            {/* {imagePreviewUrl &&
                                 <div id="Preview-image">
                                     <img src={imagePreviewUrl} alt="Preview" style={{ width: '100px' }} />
                                     <button onClick={() => { setImagePreviewUrl(null); setSelectedImage(null) }} style={{ width: '80%', marginTop: '5px' }} >Delete</button>
-                                </div>}
+                                </div>} */}
                             <div className="Input-row" id="Image-input"><p className="Input-title">photo:</p><input
                                 type='file'
                                 accept="image/*"
@@ -240,7 +271,7 @@ const AdminImage = (props) => {
                             <button id="Delete-button" onClick={handleDelete}>Delete</button>
 
                             <button id="Save-button" onClick={handleUpdate}>Save</button>
-                            {props.isPublished === 0 && <button id="Publish-button" onClick={handlePublish}>Publish</button>}
+                            {props.isPublished === 0 ? <button id="Publish-button" onClick={handlePublish}>Publish</button> : <button id="Unpublish-button" onClick={handleUnpublish}>Unpublish</button>}
                         </div>
                     </div>
                     <div className="Admin-overlay-preview">
@@ -249,7 +280,7 @@ const AdminImage = (props) => {
                             <Image
                                 id={props.id}
                                 name={name}
-                                imagePath={props.imagePath}
+                                imageUrl={imagePreviewUrl}
                                 scale={1}
                                 scaleFactor={1.1}
                                 titleLine1={title1}
@@ -257,6 +288,7 @@ const AdminImage = (props) => {
                                 seasons={seasonsToString(fall, winter, spring, summer)}
                                 descriptionParagraph1={description1}
                                 descriptionParagraph2={description2}
+                                publishedDate={props.publishedDate}
                             />
                         </div>
                     </div>
@@ -318,7 +350,7 @@ export const Admin = () => {
                         key={item.id}
                         id={item.id}
                         name={item.name}
-                        imagePath={item.imagePath}
+                        imageUrl={item.imageUrl}
                         scale={1}
                         scaleFactor={1.1}
                         titleLine1={item.titleLine1}
@@ -331,6 +363,7 @@ export const Admin = () => {
                         descriptionParagraph1={item.descriptionParagraph1}
                         descriptionParagraph2={item.descriptionParagraph2}
                         isPublished={item.isPublished}
+                        publishedDate={new Date().toISOString().split('T')[0]}
                     />
                 ))}
             </div>
@@ -347,7 +380,7 @@ export const Admin = () => {
                         key={item.id}
                         id={item.id}
                         name={item.name}
-                        imagePath={item.imagePath}
+                        imageUrl={item.imageUrl}
                         scale={1}
                         scaleFactor={1.1}
                         titleLine1={item.titleLine1}
@@ -359,6 +392,8 @@ export const Admin = () => {
                         descriptionParagraph1={item.descriptionParagraph1}
                         descriptionParagraph2={item.descriptionParagraph2}
                         isPublished={item.isPublished}
+                        isFeatured={item.isFeatured}
+                        publishedDate={item.publishedDate}
                     />
                 ))}
             </div>

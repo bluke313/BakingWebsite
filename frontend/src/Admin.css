@@ -115,6 +115,15 @@
     font-size: large;
 }
 
+#Unpublish-button {
+    background-color: rgb(255, 152, 152);
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 85px;
+    font-size: large;
+}
+
 #Delete-button {
     background-color: rgb(255, 152, 152);
     border-radius: 10px;

@@ -67,7 +67,7 @@ export const Image = (props) => {
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
 
-    const imageUrl = `http://localhost:3001/${props.imagePath}`;
+    // const imageUrl = `http://localhost:3001/${props.imagePath}`;
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
@@ -99,11 +99,11 @@ export const Image = (props) => {
                     cursor: props.clickable !== false ? 'pointer' : 'default',
                 }}
                 className='Image'>
-                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad} />
+                <img src={props.imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad} />
                 <svg width={300 * props.scale} height={400 * props.scale}>
                     <defs>
                         <pattern id={props.id} patternUnits="userSpaceOnUse" width="300" height="400">
-                            <image href={imageUrl} height="400" x={(300 - imgWidth) / 2} />
+                            <image href={props.imageUrl} height="400" x={(300 - imgWidth) / 2} />
                         </pattern>
                     </defs>
                     <g transform={`scale(${props.scale})`}>
@@ -126,11 +126,12 @@ export const Image = (props) => {
                         {/* Customize the overlay content as needed */}
                         <h1>{props.name}</h1>
                         <div className="Overlay-content-container">
-                            <img id={props.id} src={imageUrl} height="600px" style={{ margin: '10px' }} alt={props.name} />
+                            <img id={props.id} src={props.imageUrl} height="600px" style={{ margin: '10px' }} alt={props.name} />
                             <div className="Overlay-text" style={{ width: "400px" }}>
                                 <p>{props.seasons}</p>
                                 <p>{props.descriptionParagraph1}</p>
                                 <p>{props.descriptionParagraph2}</p>
+                                <p>{props.publishedDate}</p>
                             </div>
                         </div>
                     </div>
@@ -153,7 +154,7 @@ export const Season = (props) => {
                                 key={i}
                                 id={elem.id}
                                 name={elem.name}
-                                imagePath={elem.imagePath}
+                                imageUrl={elem.imageUrl}
                                 scale={1}
                                 scaleFactor={1.047}
                                 titleLine1={elem.titleLine1}
@@ -161,6 +162,7 @@ export const Season = (props) => {
                                 seasons={seasonsToString(elem.fall, elem.winter, elem.spring, elem.summer)}
                                 descriptionParagraph1={elem.descriptionParagraph1}
                                 descriptionParagraph2={elem.descriptionParagraph2}
+                                publishedDate={elem.publishedDate}
                             />
                         )
                     })}

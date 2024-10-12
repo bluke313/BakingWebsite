@@ -22,7 +22,7 @@ const SeasonPage = (props) => {
                             key={i}
                             id={elem.id}
                             name={elem.name}
-                            imagePath={elem.imagePath}
+                            imageUrl={elem.imageUrl}
                             scale={1}
                             scaleFactor={1.1}
                             titleLine1={elem.titleLine1}
@@ -30,6 +30,7 @@ const SeasonPage = (props) => {
                             seasons={seasonsToString(elem.fall, elem.winter, elem.spring, elem.summer)}
                             descriptionParagraph1={elem.descriptionParagraph1}
                             descriptionParagraph2={elem.descriptionParagraph2}
+                            publishedDate={elem.publishedDate}
                         />
                     )
                 })}
