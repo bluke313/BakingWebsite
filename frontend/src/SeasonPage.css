@@ -5,6 +5,15 @@
     font-family: 'Playwrite DE Grund', sans-serif;
 }
 
+#SeasonPage-header {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    padding-top: 2vh;
+    padding-left: 4%;
+    padding-right: 5%;
+}
+
 #Title {
     color: white;
     text-align: center;
@@ -14,4 +23,5 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    min-height: 67vh;
 }

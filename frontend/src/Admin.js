@@ -1,6 +1,6 @@
 import './Admin.css';
 import { useState, useEffect } from 'react';
-import { Link, Image } from './Components.js'
+import { Link, Image, seasonsToString } from './Components.js'
 import testImage from './images/PumpkinBars.jpg'
 
 
@@ -20,34 +20,10 @@ const AdminImage = (props) => {
     const [spring, setSpring] = useState(intToBool(props.spring));
     const [summer, setSummer] = useState(intToBool(props.summer));
 
+    const imageUrl = `http://localhost:3001/${props.imagePath}`;
+
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-
-    const seasonsToString = (fall, winter, spring, summer) => {
-
-        // eslint-disable-next-line
-        if (fall == 1 && winter == 1 && spring == 1 && summer == 1) {
-            return "Seasons: any!"
-        }
-
-        // eslint-disable-next-line
-        if (fall == 0 && winter == 0 && spring == 0 && summer == 0) {
-            return ""
-        }
-
-        let output = "Seasons: ";
-
-        // eslint-disable-next-line
-        if (fall == 1) output = output + "fall, ";
-        // eslint-disable-next-line
-        if (winter == 1) output = output + "winter, ";
-        // eslint-disable-next-line
-        if (spring == 1) output = output + "spring, ";
-        // eslint-disable-next-line
-        if (summer == 1) output = output + "summer, ";
-
-        return output.slice(0, -2);
-    }
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(null);    
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
@@ -66,6 +42,8 @@ const AdminImage = (props) => {
         setWinter(intToBool(props.winter));
         setSpring(intToBool(props.spring));
         setSummer(intToBool(props.summer));
+        setSelectedImage(null);
+        setImagePreviewUrl(null);
     };
 
     const handleNameChange = (event) => { setName(event.target.value) };
@@ -156,6 +134,8 @@ const AdminImage = (props) => {
         }
     };
 
+    const [imgWidth, setImgWidth] = useState(0);
+
     const handleImageChange = (e) => {
         const file = e.target.files[0]; // Get the first selected file
         setSelectedImage(file);
@@ -172,20 +152,26 @@ const AdminImage = (props) => {
         setSelectedImage(file); // Store the selected file
     };
 
+    const handleImageLoad = (e) => {
+        const { naturalWidth, naturalHeight } = e.target;
+        setImgWidth(200 * naturalWidth / naturalHeight);
+    };
+
     return (
         <div>
             <div
                 onClick={handleImageClick}
                 className='Admin-image'>
+                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad}/>
                 <svg width={150} height={200}>
-                    <image href={props.href} x="0" y="0" width="150" height="200" />
+                    <image href={imageUrl} height="200" x={ (150 - imgWidth) / 2 }/>
                 </svg>
                 {props.name}
             </div>
             {isOverlayVisible && (
                 <div className="Admin-overlay">
                     <div className="Admin-overlay-content">
-                        <button id="Exit-button" onClick={handleClose}>Exit Without Saving</button>
+                        <button id="Exit-button" onClick={handleClose}>Exit</button>
                         <h1>{`${props.titleLine1} ${props.titleLine2}`}</h1>
                         <div className="Admin-overlay-content-container">
                             <p className="Input-title">id: {props.id}</p>
@@ -263,12 +249,11 @@ const AdminImage = (props) => {
                             <Image
                                 id={props.id}
                                 name={name}
-                                href={testImage}
+                                imagePath={props.imagePath}
                                 scale={1}
                                 scaleFactor={1.1}
                                 titleLine1={title1}
                                 titleLine2={title2}
-                                fullImage={testImage}
                                 seasons={seasonsToString(fall, winter, spring, summer)}
                                 descriptionParagraph1={description1}
                                 descriptionParagraph2={description2}
@@ -333,7 +318,7 @@ export const Admin = () => {
                         key={item.id}
                         id={item.id}
                         name={item.name}
-                        href={testImage}
+                        imagePath={item.imagePath}
                         scale={1}
                         scaleFactor={1.1}
                         titleLine1={item.titleLine1}
@@ -362,12 +347,11 @@ export const Admin = () => {
                         key={item.id}
                         id={item.id}
                         name={item.name}
-                        href={testImage}
+                        imagePath={item.imagePath}
                         scale={1}
                         scaleFactor={1.1}
                         titleLine1={item.titleLine1}
                         titleLine2={item.titleLine2}
-                        fullImage={testImage}
                         fall={item.fall}
                         winter={item.winter}
                         spring={item.spring}

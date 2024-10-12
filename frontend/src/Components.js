@@ -1,6 +1,32 @@
 import './Components.css';
 import React, { useState } from 'react';
 
+export const seasonsToString = (fall, winter, spring, summer) => {
+
+    // eslint-disable-next-line
+    if (fall == 1 && winter == 1 && spring == 1 && summer == 1) {
+        return "Seasons: any!"
+    }
+
+    // eslint-disable-next-line
+    if (fall == 0 && winter == 0 && spring == 0 && summer == 0) {
+        return ""
+    }
+
+    let output = "Seasons: ";
+
+    // eslint-disable-next-line
+    if (fall == 1) output = output + "fall, ";
+    // eslint-disable-next-line
+    if (winter == 1) output = output + "winter, ";
+    // eslint-disable-next-line
+    if (spring == 1) output = output + "spring, ";
+    // eslint-disable-next-line
+    if (summer == 1) output = output + "summer, ";
+
+    return output.slice(0, -2);
+};
+
 export const Link = (props) => {
     return (
         <div className="Container">
@@ -12,7 +38,7 @@ export const Link = (props) => {
             >{props.text}</a>
         </div>
     );
-}
+};
 
 export const Divider = (props) => {
     return (
@@ -24,7 +50,7 @@ export const Divider = (props) => {
 
         </svg>
     )
-}
+};
 
 export const TextDivider = (props) => {
     return (
@@ -32,7 +58,7 @@ export const TextDivider = (props) => {
             <rect x="50%" width="1" height="35" fill="black" />
         </svg>
     )
-}
+};
 
 export const Image = (props) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -40,6 +66,8 @@ export const Image = (props) => {
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
+
+    const imageUrl = `http://localhost:3001/${props.imagePath}`;
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
@@ -51,6 +79,13 @@ export const Image = (props) => {
         event.stopPropagation();
     }
 
+    const [imgWidth, setImgWidth] = useState(0);
+
+    const handleImageLoad = (e) => {
+        const { naturalWidth, naturalHeight } = e.target;
+        setImgWidth(400 * naturalWidth / naturalHeight);
+    };
+
     return (
         <div>
             <div
@@ -60,13 +95,15 @@ export const Image = (props) => {
                 style={{
                     transform: isHovered ? `scale(${props.scaleFactor})` : 'scale(1)',
                     transition: 'transform 0.3s ease',
-                    margin: '0px 20px 10px 20px'
+                    margin: '0px 20px 10px 20px',
+                    cursor: props.clickable !== false ? 'pointer' : 'default',
                 }}
                 className='Image'>
+                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad} />
                 <svg width={300 * props.scale} height={400 * props.scale}>
                     <defs>
                         <pattern id={props.id} patternUnits="userSpaceOnUse" width="300" height="400">
-                            <image href={props.href} x="0" y="0" width="300" height="400" />
+                            <image href={imageUrl} height="400" x={(300 - imgWidth) / 2} />
                         </pattern>
                     </defs>
                     <g transform={`scale(${props.scale})`}>
@@ -87,10 +124,10 @@ export const Image = (props) => {
                 <div className="Overlay" onClick={() => setIsOverlayVisible(false)}>
                     <div className="Overlay-content" onClick={handleContentClick}>
                         {/* Customize the overlay content as needed */}
-                        <h1>{`${props.titleLine1} ${props.titleLine2}`}</h1>
+                        <h1>{props.name}</h1>
                         <div className="Overlay-content-container">
-                            <img id={`${props.titleLine1} ${props.titleLine2}.full`} src={props.fullImage} height="600px" style={{margin: '10px'}} alt={props.name}/>
-                            <div className="Overlay-text" style={{width: "400px"}}>
+                            <img id={props.id} src={imageUrl} height="600px" style={{ margin: '10px' }} alt={props.name} />
+                            <div className="Overlay-text" style={{ width: "400px" }}>
                                 <p>{props.seasons}</p>
                                 <p>{props.descriptionParagraph1}</p>
                                 <p>{props.descriptionParagraph2}</p>
@@ -101,7 +138,7 @@ export const Image = (props) => {
             )}
         </div>
     )
-}
+};
 
 export const Season = (props) => {
 
@@ -114,12 +151,16 @@ export const Season = (props) => {
                         return (
                             <Image
                                 key={i}
-                                id={`${elem.name}-${i}`}
-                                href={elem.imageURL}
+                                id={elem.id}
+                                name={elem.name}
+                                imagePath={elem.imagePath}
                                 scale={1}
                                 scaleFactor={1.047}
                                 titleLine1={elem.titleLine1}
                                 titleLine2={elem.titleLine2}
+                                seasons={seasonsToString(elem.fall, elem.winter, elem.spring, elem.summer)}
+                                descriptionParagraph1={elem.descriptionParagraph1}
+                                descriptionParagraph2={elem.descriptionParagraph2}
                             />
                         )
                     })}
@@ -128,16 +169,16 @@ export const Season = (props) => {
             <div style={{ height: '10vh' }} />
         </div>
     )
-}
+};
 
 export const Footer = () => {
 
     return (
         <footer className="Footer">
-            <div className="Quarter-div"><h1>Find us here</h1><p>hello@reallygreatsite.com</p></div>
-            <div className="Quarter-div"><p>512 Covington Terrace</p></div>
-            <div className="Quarter-div">Casey's Cookies</div>
-            <div className="Quarter-div">test</div>
+            <div className="Quarter-div"></div>
+            <div className="Quarter-div"></div>
+            <div className="Quarter-div"></div>
+            <div className="Quarter-div"></div>
         </footer>
     )
-}
+};

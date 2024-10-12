@@ -8,6 +8,7 @@ const app = express();
 const port = 3001;
 app.use(express.json());
 app.use(cors());
+app.use('/images', express.static('images'));
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

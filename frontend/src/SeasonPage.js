@@ -1,11 +1,11 @@
 import './SeasonPage.css'
-import { Link, Divider, TextDivider, Image, Footer } from './Components.js'
+import { Link, Divider, TextDivider, Image, Footer, seasonsToString } from './Components.js'
 
 const SeasonPage = (props) => {
 
     return (
         <div id="SeasonPage">
-            <header id="App-header">
+            <header id="SeasonPage-header">
                 <Link text="Home" href="/" /><TextDivider />
                 <Link text="Fall" href="/Fall" /><TextDivider />
                 <Link text="Winter" href="/Winter" /><TextDivider />
@@ -20,14 +20,14 @@ const SeasonPage = (props) => {
                     return (
                         <Image
                             key={i}
-                            id={`${elem.name}-${i}`}
-                            href={elem.imageURL}
+                            id={elem.id}
+                            name={elem.name}
+                            imagePath={elem.imagePath}
                             scale={1}
                             scaleFactor={1.1}
                             titleLine1={elem.titleLine1}
                             titleLine2={elem.titleLine2}
-                            fullImage={elem.fullImage}
-                            seasons={elem.seasons}
+                            seasons={seasonsToString(elem.fall, elem.winter, elem.spring, elem.summer)}
                             descriptionParagraph1={elem.descriptionParagraph1}
                             descriptionParagraph2={elem.descriptionParagraph2}
                         />

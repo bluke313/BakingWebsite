@@ -1,23 +1,40 @@
 import snowflake from './snowflake.svg'
-import sample from './images/sample.png'
-import sample2 from './images/sample2.jpg'
-import CaramelPeanutButterBars from './images/CaramelPeanutButterBars300x400.png'
-import CaramelPeanutButterBarsFull from './images/CaramelPeanutButterBars.jpg'
-import PumpkinBars from './images/PumpkinBars.jpg'
 
 import logo from './images/caseysLogo.png'
-import { fallItems, winterItems, springItems, summerItems } from './Items.js';
 import './Home.css';
 import { useState, useEffect } from 'react';
-import { Link, Divider, TextDivider, Image, Season, Footer } from './Components.js'
+import { Link, Divider, TextDivider, Image, Season, Footer, seasonsToString } from './Components.js'
 
 const Home = () => {
   const [returnVisible, setReturnVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  const featured = [fallItems[0], fallItems[1]]
+  const [fallItems, setFallItems] = useState([]);
+  const [winterItems, setWinterItems] = useState([]);
+  const [springItems, setSpringItems] = useState([]);
+  const [summerItems, setSummerItems] = useState([]);
+  const [featuredItems, setFeaturedItems] = useState([]);
+
+  const sample2 = "images/sample2.jpg";
 
   useEffect(() => {
+
+    fetch('http://localhost:3001/fall')
+      .then((response) => response.json())
+      .then((data) => setFallItems(data.data))
+      .catch((error) => console.error('Error fetching data:', error));
+    fetch('http://localhost:3001/winter')
+      .then((response) => response.json())
+      .then((data) => setWinterItems(data.data))
+      .catch((error) => console.error('Error fetching data:', error));
+    fetch('http://localhost:3001/spring')
+      .then((response) => response.json())
+      .then((data) => setSpringItems(data.data))
+      .catch((error) => console.error('Error fetching data:', error));
+    fetch('http://localhost:3001/summer')
+      .then((response) => response.json())
+      .then((data) => setSummerItems(data.data))
+      .catch((error) => console.error('Error fetching data:', error));
 
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -41,6 +58,7 @@ const Home = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
+
   }, []);
 
   return (
@@ -66,14 +84,14 @@ const Home = () => {
       <div id="Title-section">
         <Image
           id="sample2"
-          href={sample2}
+          imagePath={sample2}
           scale={windowWidth / 1100}
           clickable={false}
         />
         <img src={logo} style={{ width: '40%', maxHeight: '710px', objectFit: 'cover' }} />
         <Image
           id="sample2"
-          href={sample2}
+          imagePath={sample2}
           scale={windowWidth / 1100}
           clickable={false}
         />
@@ -93,7 +111,7 @@ const Home = () => {
           </div>
         </div>
         <div className="Half-div">
-          <img id="Section1Img" src={CaramelPeanutButterBarsFull} style={{ width: '80%', borderStyle: 'solid', borderRadius: '100px', borderColor: 'maroon', borderWidth: '5px' }} />
+          <img id="Section1Img" src={logo} style={{ width: '80%', borderStyle: 'solid', borderRadius: '100px', borderColor: 'maroon', borderWidth: '5px' }} />
         </div>
       </div>
 
@@ -102,19 +120,19 @@ const Home = () => {
       <div id="Section-2">
         <h1>Featured</h1>
         <div className="Thirds">
-          {featured.map((elem, i) => {
+          {fallItems.map((elem, i) => {
             return (
               <div className="Third-div">
                 <Image
                   key={i}
-                  id={`${elem.name}-${i}`}
-                  href={elem.imageURL}
+                  id={elem.id}
+                  name={elem.name}
+                  imagePath={elem.imagePath}
                   scale={windowWidth / 1300}
                   scaleFactor={1.1}
                   titleLine1={elem.titleLine1}
                   titleLine2={elem.titleLine2}
-                  fullImage={elem.fullImage}
-                  seasons={elem.seasons}
+                  seasons={seasonsToString(elem.fall, elem.winter, elem.spring, elem.summer)}
                   descriptionParagraph1={elem.descriptionParagraph1}
                   descriptionParagraph2={elem.descriptionParagraph2}
                 />

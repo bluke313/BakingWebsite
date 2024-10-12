@@ -38,7 +38,7 @@
 }
 
 .Footer {
-    max-height: 14vh;
+    height: 14vh;
     background-color: #9d5425;
     display: flex;
     flex: wrap;
