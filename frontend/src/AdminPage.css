@@ -1,0 +1,23 @@
+#Login {
+    background-color: grey;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#Login h1 {
+    margin-top: 200px;
+}
+
+.Input-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Login input {
+    height: min-content;
+    margin-left: 10px;
+}

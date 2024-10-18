@@ -126,7 +126,6 @@ const Home = () => {
         <div className="Thirds">
           {featuredItems.map((elem, i) => {
             return (
-              <div className="Third-div">
                 <Image
                   key={i}
                   id={elem.id}
@@ -141,7 +140,6 @@ const Home = () => {
                   descriptionParagraph2={elem.descriptionParagraph2}
                   publishedDate={elem.publishedDate}
                 />
-              </div>
             )
           })}
         </div>

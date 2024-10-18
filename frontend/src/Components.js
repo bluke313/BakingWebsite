@@ -96,6 +96,7 @@ export const Image = (props) => {
                     transform: isHovered ? `scale(${props.scaleFactor})` : 'scale(1)',
                     transition: 'transform 0.3s ease',
                     margin: '0px 20px 10px 20px',
+                    width: 'min-content',
                     cursor: props.clickable !== false ? 'pointer' : 'default',
                 }}
                 className='Image'>
@@ -121,12 +122,12 @@ export const Image = (props) => {
                 </svg>
             </div>
             {isOverlayVisible && (
-                <div className="Overlay" onClick={() => setIsOverlayVisible(false)}>
+                <div className="Overlay">
                     <div className="Overlay-content" onClick={handleContentClick}>
-                        {/* Customize the overlay content as needed */}
+                        <text id="X-button" onClick={() => setIsOverlayVisible(false)}>x</text>
                         <h1>{props.name}</h1>
                         <div className="Overlay-content-container">
-                            <img id={props.id} src={props.imageUrl} height="600px" style={{ margin: '10px' }} alt={props.name} />
+                            <img id={props.id} src={props.imageUrl} height="600px" className="Overlay-image" alt={props.name} />
                             <div className="Overlay-text" style={{ width: "400px" }}>
                                 <p>{props.seasons}</p>
                                 <p>{props.descriptionParagraph1}</p>

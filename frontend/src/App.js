@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home.js';
 import SeasonPage from './SeasonPage.js';
-import Admin from './Admin.js';
+import AdminPage from './AdminPage.js';
 import { useState, useEffect } from 'react';
 
 
@@ -17,7 +17,7 @@ const App = () => {
                 <Route path="/winter" element={<Winter />} />
                 <Route path="/spring" element={<Spring />} />
                 <Route path="/summer" element={<Summer />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<AdminPage />} />
             </Routes>
         </Router>
     );
