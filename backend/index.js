@@ -55,7 +55,7 @@ app.get('/drafts', (req, res) => {
 });
 
 app.get('/fall', (req, res) => {
-    db.all('SELECT * FROM items WHERE fall = 1 and isPublished = 1', [], (err, rows) => {
+    db.all('SELECT * FROM items WHERE fall = 1 AND isPublished = 1', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
