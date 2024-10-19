@@ -3,7 +3,7 @@ import snowflake from './snowflake.svg'
 import logo from './images/caseysLogo.png'
 import './Home.css';
 import { useState, useEffect } from 'react';
-import { Link, Divider, TextDivider, Image, Season, Footer, seasonsToString } from './Components.js'
+import { Link, Divider, TextDivider, Image, Season, Footer, seasonsToString, backendUrl } from './Components.js'
 
 const Home = () => {
   const [returnVisible, setReturnVisible] = useState(false);
@@ -15,27 +15,27 @@ const Home = () => {
   const [summerItems, setSummerItems] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
 
-  const sample2 = "https://caseyscookies.onrender.com/images/sample2.jpg";
+  const sample = `${backendUrl}/images/sample.jpg`;
 
   useEffect(() => {
 
-    fetch('https://caseyscookies.onrender.com/fall')
+    fetch(`${backendUrl}/fall`)
       .then((response) => response.json())
       .then((data) => setFallItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('https://caseyscookies.onrender.com/winter')
+    fetch(`${backendUrl}/winter`)
       .then((response) => response.json())
       .then((data) => setWinterItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('https://caseyscookies.onrender.com/spring')
+    fetch(`${backendUrl}/spring`)
       .then((response) => response.json())
       .then((data) => setSpringItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('https://caseyscookies.onrender.com/summer')
+    fetch(`${backendUrl}/summer`)
       .then((response) => response.json())
       .then((data) => setSummerItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('https://caseyscookies.onrender.com/featured')
+    fetch(`${backendUrl}/featured`)
       .then((response) => response.json())
       .then((data) => setFeaturedItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
@@ -87,15 +87,15 @@ const Home = () => {
 
       <div id="Title-section">
         <Image
-          id="sample2"
-          imageUrl={sample2}
+          id="sample"
+          imageUrl={sample}
           scale={windowWidth / 1100}
           clickable={false}
         />
         <img src={logo} style={{ width: '40%', maxHeight: '710px', objectFit: 'cover' }} />
         <Image
-          id="sample2"
-          imageUrl={sample2}
+          id="sample"
+          imageUrl={sample}
           scale={windowWidth / 1100}
           clickable={false}
         />
@@ -130,7 +130,7 @@ const Home = () => {
                   key={i}
                   id={elem.id}
                   name={elem.name}
-                  imageUrl={elem.imageUrl}
+                  imageUrl={`${backendUrl}/images/${elem.imageUrl}`}
                   scale={windowWidth / 1300}
                   scaleFactor={1.1}
                   titleLine1={elem.titleLine1}

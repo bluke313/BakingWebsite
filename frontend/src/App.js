@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home.js';
 import SeasonPage from './SeasonPage.js';
 import AdminPage from './AdminPage.js';
+import { backendUrl } from './Components.js';
 import { useState, useEffect } from 'react';
 
 
@@ -27,7 +28,7 @@ const Fall = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://caseyscookies.onrender.com/fall')
+        fetch(`${backendUrl}/fall`)
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -46,7 +47,7 @@ const Winter = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://caseyscookies.onrender.com/winter')
+        fetch(`${backendUrl}/winter`)
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -65,7 +66,7 @@ const Spring = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://caseyscookies.onrender.com/spring')
+        fetch(`${backendUrl}/spring`)
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -84,7 +85,7 @@ const Summer = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('https://caseyscookies.onrender.com/summer')
+        fetch(`${backendUrl}/summer`)
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));

@@ -1,7 +1,6 @@
 import './Admin.css';
 import { useState, useEffect } from 'react';
-import { Link, Image, seasonsToString } from './Components.js'
-import testImage from './images/PumpkinBars.jpg'
+import { Link, Image, seasonsToString, backendUrl } from './Components.js'
 
 
 const AdminImage = (props) => {
@@ -22,7 +21,9 @@ const AdminImage = (props) => {
     const [isFeatured, setIsFeatured] = useState(intToBool(props.isFeatured));
 
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(props.imageUrl);    
+    const imageUrl = backendUrl + "/images/" + props.imageUrl;
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(imageUrl);    
+
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
@@ -42,7 +43,7 @@ const AdminImage = (props) => {
         setSpring(intToBool(props.spring));
         setSummer(intToBool(props.summer));
         setSelectedImage(null);
-        setImagePreviewUrl(props.imageUrl);
+        setImagePreviewUrl(imageUrl);
         setIsFeatured(intToBool(props.isFeatured));
     };
 
@@ -75,7 +76,7 @@ const AdminImage = (props) => {
             formData.append('summer', boolToInt(summer));
             formData.append('isFeatured', boolToInt(isFeatured));
             
-            const response = await fetch('https://caseyscookies.onrender.com/update-item', {
+            const response = await fetch(`${backendUrl}/update-item`, {
                 method: 'PUT',
                 body: formData,
             });
@@ -93,7 +94,7 @@ const AdminImage = (props) => {
     const handleDelete = async () => {
         const userResponse = window.confirm("Are you sure? This permanently delete the item.");
         if (userResponse) {
-            const response = await fetch('https://caseyscookies.onrender.com/delete-item', {
+            const response = await fetch(`${backendUrl}/delete-item`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +117,7 @@ const AdminImage = (props) => {
     const handlePublish = async () => {
         const userResponse = window.confirm("Are you sure? This will make the item viewable on the website.");
         if (userResponse) {
-            const response = await fetch('https://caseyscookies.onrender.com/publish-item', {
+            const response = await fetch(`${backendUrl}/publish-item`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -139,7 +140,7 @@ const AdminImage = (props) => {
     const handleUnpublish = async () => {
         const userResponse = window.confirm("Are you sure? This will remove the item from the website.");
         if (userResponse) {
-            const response = await fetch('https://caseyscookies.onrender.com/unpublish-item', {
+            const response = await fetch(`${backendUrl}/unpublish-item`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -187,9 +188,9 @@ const AdminImage = (props) => {
             <div
                 onClick={handleImageClick}
                 className='Admin-image'>
-                <img src={props.imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad}/>
+                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad}/>
                 <svg width={150} height={200}>
-                    <image href={props.imageUrl} height="200" x={ (150 - imgWidth) / 2 }/>
+                    <image href={imageUrl} height="200" x={ (150 - imgWidth) / 2 }/>
                 </svg>
                 {props.name}
             </div>
@@ -263,7 +264,7 @@ const AdminImage = (props) => {
                                 onChange={handleImageChange}
                             />
                             </div>
-                            <p>{props.imageUrl}</p>
+                            <p>{imageUrl}</p>
                             <button id="Delete-button" onClick={handleDelete}>Delete</button>
 
                             <button id="Save-button" onClick={handleUpdate}>Save</button>
@@ -300,12 +301,12 @@ export const Admin = () => {
     const [refreshData, setRefreshData] = useState(false);
 
     useEffect(() => {
-        fetch('https://caseyscookies.onrender.com/published')
+        fetch(`${backendUrl}/published`)
             .then((response) => response.json())
             .then((data) => setItems(data.data))
             .catch((error) => console.error('Error fetching data:', error));
 
-        fetch('https://caseyscookies.onrender.com/drafts')
+        fetch(`${backendUrl}/drafts`)
             .then((response) => response.json())
             .then((data) => setDrafts(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -319,7 +320,7 @@ export const Admin = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('https://caseyscookies.onrender.com/new-draft', { method: 'POST' });
+            const response = await fetch(`${backendUrl}/new-draft`, { method: 'POST' });
         } catch (error) {
             console.error("Error creating new draft: ", error);
         }
@@ -351,7 +352,6 @@ export const Admin = () => {
                         scaleFactor={1.1}
                         titleLine1={item.titleLine1}
                         titleLine2={item.titleLine2}
-                        fullImage={testImage}
                         fall={item.fall}
                         winter={item.winter}
                         spring={item.spring}

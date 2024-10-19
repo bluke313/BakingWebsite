@@ -1,5 +1,5 @@
 import './SeasonPage.css'
-import { Link, Divider, TextDivider, Image, Footer, seasonsToString } from './Components.js'
+import { Link, Divider, TextDivider, Image, Footer, seasonsToString, backendUrl } from './Components.js'
 
 const SeasonPage = (props) => {
 
@@ -22,7 +22,7 @@ const SeasonPage = (props) => {
                             key={i}
                             id={elem.id}
                             name={elem.name}
-                            imageUrl={elem.imageUrl}
+                            imageUrl={`${backendUrl}/images/${elem.imageUrl}`}
                             scale={1}
                             scaleFactor={1.1}
                             titleLine1={elem.titleLine1}

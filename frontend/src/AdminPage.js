@@ -1,9 +1,9 @@
 import { Admin } from './Admin.js';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './AdminPage.css';
 
 const AdminPage = () => {
-    const [authorized, setAuthorized] = useState(false);
+    const [authorized, setAuthorized] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -12,10 +12,6 @@ const AdminPage = () => {
     const userkey = "$2a$10$U8gbiB3FYkU5WAriMjeeruCcL6AwAa.xbz75y5dsRWO9ECeKHHRYW";
 
     const bcrypt = require('bcryptjs');
-
-    bcrypt.hash('', 10, function(err, hash) {
-        console.log(hash);
-    });
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);

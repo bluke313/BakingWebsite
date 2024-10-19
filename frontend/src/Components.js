@@ -1,6 +1,10 @@
 import './Components.css';
 import React, { useState } from 'react';
 
+// export const backendUrl = "https://caseyscookies.onrender.com";
+export const backendUrl = "http://localhost:10000";
+
+
 export const seasonsToString = (fall, winter, spring, summer) => {
 
     // eslint-disable-next-line
@@ -66,8 +70,6 @@ export const Image = (props) => {
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
-
-    // const imageUrl = `https://caseyscookies.onrender.com/${props.imagePath}`;
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
@@ -155,7 +157,7 @@ export const Season = (props) => {
                                 key={i}
                                 id={elem.id}
                                 name={elem.name}
-                                imageUrl={elem.imageUrl}
+                                imageUrl={`${backendUrl}/images/${elem.imageUrl}`}
                                 scale={1}
                                 scaleFactor={1.047}
                                 titleLine1={elem.titleLine1}
