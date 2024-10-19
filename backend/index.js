@@ -133,7 +133,7 @@ app.put('/update-item', upload.single('image'), (req, res) => {
                 isFeatured = ?
             WHERE id = ?
         `;
-        imageUrl = 'https://caseyscookies.onrender.com' + imageUrl;
+        imageUrl = 'https://caseyscookies.onrender.com/' + imageUrl;
         params = [date, newName, title1, title2, description1, description2, fall, winter, spring, summer, imageUrl, isFeatured, id]
     } else {
         sql = `
