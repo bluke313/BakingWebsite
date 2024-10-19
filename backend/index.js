@@ -50,7 +50,7 @@ app.get('/drafts', (req, res) => {
 });
 
 app.get('/fall', (req, res) => {
-    db.all('SELECT * FROM items WHERE fall = 1', [], (err, rows) => {
+    db.all('SELECT * FROM items WHERE fall = 1 AND isPublished = 1', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
@@ -60,7 +60,7 @@ app.get('/fall', (req, res) => {
 });
 
 app.get('/winter', (req, res) => {
-    db.all('SELECT * FROM items WHERE winter = 1', [], (err, rows) => {
+    db.all('SELECT * FROM items WHERE winter = 1 AND isPublished = 1', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
@@ -70,7 +70,7 @@ app.get('/winter', (req, res) => {
 });
 
 app.get('/spring', (req, res) => {
-    db.all('SELECT * FROM items WHERE spring = 1', [], (err, rows) => {
+    db.all('SELECT * FROM items WHERE spring = 1 AND isPublished = 1', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
@@ -80,7 +80,7 @@ app.get('/spring', (req, res) => {
 });
 
 app.get('/summer', (req, res) => {
-    db.all('SELECT * FROM items WHERE summer = 1', [], (err, rows) => {
+    db.all('SELECT * FROM items WHERE summer = 1 AND isPublished = 1', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
