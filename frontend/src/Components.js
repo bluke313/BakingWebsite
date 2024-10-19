@@ -1,8 +1,8 @@
 import './Components.css';
 import React, { useState } from 'react';
 
-// export const backendUrl = "https://caseyscookies.onrender.com";
-export const backendUrl = "http://localhost:10000";
+export const backendUrl = "https://caseyscookies.onrender.com";
+// export const backendUrl = "http://localhost:10000";
 
 
 export const seasonsToString = (fall, winter, spring, summer) => {
