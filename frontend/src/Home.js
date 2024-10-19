@@ -79,7 +79,7 @@ const Home = () => {
           <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" />
         </div>
         <div>
-          <Link text="Admin" href="/Admin" style={{}} />
+          {/* <Link text="Admin" href="/Admin" style={{}} /> */}
         </div>
       </header>
 

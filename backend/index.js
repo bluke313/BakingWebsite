@@ -218,6 +218,6 @@ app.post('/delete-item', (req, res) => {
     });
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
