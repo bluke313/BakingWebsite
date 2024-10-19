@@ -7,17 +7,15 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 10000;
 app.use(express.json());
-app.use('/images', express.static('images'));
-const frontendURL = "https://caseyscookies-a45s.onrender.com";
-app.use(cors({
-    origin: frontendURL,
-    credentials: true
-}));
+app.use('/images', express.static('storage/images'));
+// const frontendURL = "http://localhost:3000";
+// const backendURL = "https://caseyscookies.onrender.com";
+app.use(cors());
 
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images/');
+        cb(null, 'storage/images/');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -26,7 +24,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Connect to database
-const db = new sqlite3.Database('./mydb.db', (err) => {
+const db = new sqlite3.Database('./storage/database.db', (err) => {
     if (err) {
         console.error('Error opening database: ', err.message);
     } else {
@@ -111,7 +109,7 @@ app.put('/update-item', upload.single('image'), (req, res) => {
 
     const { id, newName, title1, title2, description1, description2, fall, winter, spring, summer, isFeatured } = req.body;
     const date = new Date().toISOString().split('T')[0];
-    let imageUrl = req.file ? req.file.path : null;
+    let imageUrl = req.file ? req.file.filename : null;
 
     let sql;
     let params;
@@ -133,7 +131,6 @@ app.put('/update-item', upload.single('image'), (req, res) => {
                 isFeatured = ?
             WHERE id = ?
         `;
-        imageUrl = 'https://caseyscookies.onrender.com/' + imageUrl;
         params = [date, newName, title1, title2, description1, description2, fall, winter, spring, summer, imageUrl, isFeatured, id]
     } else {
         sql = `
