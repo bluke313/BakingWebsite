@@ -257,17 +257,13 @@ const AdminImage = (props) => {
                                 onChange={handleSummerChange}
                             />
                             </div>
-                            {/* {imagePreviewUrl &&
-                                <div id="Preview-image">
-                                    <img src={imagePreviewUrl} alt="Preview" style={{ width: '100px' }} />
-                                    <button onClick={() => { setImagePreviewUrl(null); setSelectedImage(null) }} style={{ width: '80%', marginTop: '5px' }} >Delete</button>
-                                </div>} */}
                             <div className="Input-row" id="Image-input"><p className="Input-title">photo:</p><input
                                 type='file'
                                 accept="image/*"
                                 onChange={handleImageChange}
                             />
                             </div>
+                            <p>{props.imageUrl}</p>
                             <button id="Delete-button" onClick={handleDelete}>Delete</button>
 
                             <button id="Save-button" onClick={handleUpdate}>Save</button>
