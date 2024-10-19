@@ -27,7 +27,7 @@ const Fall = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/fall')
+        fetch('https://caseyscookies.onrender.com/fall')
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -46,7 +46,7 @@ const Winter = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/winter')
+        fetch('https://caseyscookies.onrender.com/winter')
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -65,7 +65,7 @@ const Spring = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/spring')
+        fetch('https://caseyscookies.onrender.com/spring')
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -84,7 +84,7 @@ const Summer = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/summer')
+        fetch('https://caseyscookies.onrender.com/summer')
             .then((response) => response.json())
             .then((data) => setData(data.data))
             .catch((error) => console.error('Error fetching data:', error));

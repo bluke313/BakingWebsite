@@ -15,27 +15,27 @@ const Home = () => {
   const [summerItems, setSummerItems] = useState([]);
   const [featuredItems, setFeaturedItems] = useState([]);
 
-  const sample2 = "http://localhost:3001/images/sample2.jpg";
+  const sample2 = "https://caseyscookies.onrender.com/images/sample2.jpg";
 
   useEffect(() => {
 
-    fetch('http://localhost:3001/fall')
+    fetch('https://caseyscookies.onrender.com/fall')
       .then((response) => response.json())
       .then((data) => setFallItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('http://localhost:3001/winter')
+    fetch('https://caseyscookies.onrender.com/winter')
       .then((response) => response.json())
       .then((data) => setWinterItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('http://localhost:3001/spring')
+    fetch('https://caseyscookies.onrender.com/spring')
       .then((response) => response.json())
       .then((data) => setSpringItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('http://localhost:3001/summer')
+    fetch('https://caseyscookies.onrender.com/summer')
       .then((response) => response.json())
       .then((data) => setSummerItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));
-    fetch('http://localhost:3001/featured')
+    fetch('https://caseyscookies.onrender.com/featured')
       .then((response) => response.json())
       .then((data) => setFeaturedItems(data.data))
       .catch((error) => console.error('Error fetching data:', error));

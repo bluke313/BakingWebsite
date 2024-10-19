@@ -7,8 +7,13 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 10000;
 app.use(express.json());
-app.use(cors());
 app.use('/images', express.static('images'));
+const frontendURL = "https://caseyscookies-a45s.onrender.com";
+app.use(cors({
+    origin: frontendURL,
+    credentials: true
+}));
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -128,7 +133,7 @@ app.put('/update-item', upload.single('image'), (req, res) => {
                 isFeatured = ?
             WHERE id = ?
         `;
-        imageUrl = 'http://localhost:3001/' + imageUrl;
+        imageUrl = 'https://caseyscookies.onrender.com' + imageUrl;
         params = [date, newName, title1, title2, description1, description2, fall, winter, spring, summer, imageUrl, isFeatured, id]
     } else {
         sql = `

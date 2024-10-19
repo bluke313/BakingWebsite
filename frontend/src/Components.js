@@ -67,7 +67,7 @@ export const Image = (props) => {
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
 
-    // const imageUrl = `http://localhost:3001/${props.imagePath}`;
+    // const imageUrl = `https://caseyscookies.onrender.com/${props.imagePath}`;
 
     const handleImageClick = () => {
         if (props.clickable !== false) {
