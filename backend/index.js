@@ -5,10 +5,15 @@ const multer = require('multer');
 const path = require('path');
 
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 10000;
 app.use(express.json());
-app.use(cors());
 app.use('/images', express.static('images'));
+const frontendURL = "https://caseyscookies-a45s.onrender.com";
+app.use(cors({
+    origin: frontendURL,
+    credentials: true
+}));
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -90,7 +95,7 @@ app.get('/summer', (req, res) => {
 });
 
 app.get('/featured', (req, res) => {
-    db.all('SELECT * FROM items WHERE isFeatured = 1', [], (err, rows) => {
+    db.all('SELECT * FROM items WHERE isFeatured = 1 AND isPublished = 1', [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
@@ -128,7 +133,7 @@ app.put('/update-item', upload.single('image'), (req, res) => {
                 isFeatured = ?
             WHERE id = ?
         `;
-        imageUrl = 'http://localhost:3001/' + imageUrl;
+        imageUrl = 'https://caseyscookies.onrender.com/' + imageUrl;
         params = [date, newName, title1, title2, description1, description2, fall, winter, spring, summer, imageUrl, isFeatured, id]
     } else {
         sql = `
@@ -218,6 +223,6 @@ app.post('/delete-item', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

@@ -75,7 +75,7 @@ const AdminImage = (props) => {
             formData.append('summer', boolToInt(summer));
             formData.append('isFeatured', boolToInt(isFeatured));
             
-            const response = await fetch('http://localhost:3001/update-item', {
+            const response = await fetch('https://caseyscookies.onrender.com/update-item', {
                 method: 'PUT',
                 body: formData,
             });
@@ -93,7 +93,7 @@ const AdminImage = (props) => {
     const handleDelete = async () => {
         const userResponse = window.confirm("Are you sure? This permanently delete the item.");
         if (userResponse) {
-            const response = await fetch('http://localhost:3001/delete-item', {
+            const response = await fetch('https://caseyscookies.onrender.com/delete-item', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ const AdminImage = (props) => {
     const handlePublish = async () => {
         const userResponse = window.confirm("Are you sure? This will make the item viewable on the website.");
         if (userResponse) {
-            const response = await fetch('http://localhost:3001/publish-item', {
+            const response = await fetch('https://caseyscookies.onrender.com/publish-item', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const AdminImage = (props) => {
     const handleUnpublish = async () => {
         const userResponse = window.confirm("Are you sure? This will remove the item from the website.");
         if (userResponse) {
-            const response = await fetch('http://localhost:3001/unpublish-item', {
+            const response = await fetch('https://caseyscookies.onrender.com/unpublish-item', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -257,17 +257,13 @@ const AdminImage = (props) => {
                                 onChange={handleSummerChange}
                             />
                             </div>
-                            {/* {imagePreviewUrl &&
-                                <div id="Preview-image">
-                                    <img src={imagePreviewUrl} alt="Preview" style={{ width: '100px' }} />
-                                    <button onClick={() => { setImagePreviewUrl(null); setSelectedImage(null) }} style={{ width: '80%', marginTop: '5px' }} >Delete</button>
-                                </div>} */}
                             <div className="Input-row" id="Image-input"><p className="Input-title">photo:</p><input
                                 type='file'
                                 accept="image/*"
                                 onChange={handleImageChange}
                             />
                             </div>
+                            <p>{props.imageUrl}</p>
                             <button id="Delete-button" onClick={handleDelete}>Delete</button>
 
                             <button id="Save-button" onClick={handleUpdate}>Save</button>
@@ -304,12 +300,12 @@ export const Admin = () => {
     const [refreshData, setRefreshData] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:3001/published')
+        fetch('https://caseyscookies.onrender.com/published')
             .then((response) => response.json())
             .then((data) => setItems(data.data))
             .catch((error) => console.error('Error fetching data:', error));
 
-        fetch('http://localhost:3001/drafts')
+        fetch('https://caseyscookies.onrender.com/drafts')
             .then((response) => response.json())
             .then((data) => setDrafts(data.data))
             .catch((error) => console.error('Error fetching data:', error));
@@ -323,7 +319,7 @@ export const Admin = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3001/new-draft', { method: 'POST' });
+            const response = await fetch('https://caseyscookies.onrender.com/new-draft', { method: 'POST' });
         } catch (error) {
             console.error("Error creating new draft: ", error);
         }
