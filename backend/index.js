@@ -5,7 +5,7 @@ const multer = require('multer');
 const path = require('path');
 
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 app.use('/images', express.static('images'));
@@ -219,5 +219,5 @@ app.post('/delete-item', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on port ${PORT}`);
 });
