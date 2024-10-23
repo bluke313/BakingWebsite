@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/BakingWebsite/static/css/main.34df7493.css",
-    "main.js": "/BakingWebsite/static/js/main.e5fc39f2.js",
+    "main.js": "/BakingWebsite/static/js/main.287f64f8.js",
     "static/js/453.8ab44547.chunk.js": "/BakingWebsite/static/js/453.8ab44547.chunk.js",
     "static/media/caseysLogo.png": "/BakingWebsite/static/media/caseysLogo.172c7101d78d41d8e840.png",
     "static/media/snowflake.svg": "/BakingWebsite/static/media/snowflake.00175645acde5d439a6b93430033384e.svg",
     "index.html": "/BakingWebsite/index.html",
     "main.34df7493.css.map": "/BakingWebsite/static/css/main.34df7493.css.map",
-    "main.e5fc39f2.js.map": "/BakingWebsite/static/js/main.e5fc39f2.js.map",
+    "main.287f64f8.js.map": "/BakingWebsite/static/js/main.287f64f8.js.map",
     "453.8ab44547.chunk.js.map": "/BakingWebsite/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.34df7493.css",
-    "static/js/main.e5fc39f2.js"
+    "static/js/main.287f64f8.js"
   ]
 }
