@@ -1,5 +1,6 @@
 import './Components.css';
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 export const backendUrl = "https://caseyscookies.onrender.com";
 // export const backendUrl = "http://localhost:10000";
@@ -34,12 +35,12 @@ export const seasonsToString = (fall, winter, spring, summer) => {
 export const Link = (props) => {
     return (
         <div className="Container">
-            <a
+            <RouterLink
                 className="Link-button"
-                href={props.href}
+                to={props.href}
                 id={props.id}
                 target={props.target}
-            >{props.text}</a>
+            >{props.text}</RouterLink>
         </div>
     );
 };
