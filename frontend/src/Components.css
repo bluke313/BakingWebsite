@@ -75,8 +75,27 @@
     text-align: center;
     max-width: 90%;
     max-height: 90%;
+    overflow-y: auto;
     cursor: default;
     position: relative;
+}
+
+.Overlay-content::-webkit-scrollbar {
+    width: 16px;
+}
+
+.Overlay-content::-webkit-scrollbar-thumb {
+    background-color: rgb(177, 177, 177);
+    border-radius: 6px;
+}
+
+.Overlay-content::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+}
+
+.Overlay-content::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 150, 150);
 }
 
 .Overlay-content h1 {

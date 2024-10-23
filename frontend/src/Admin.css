@@ -52,11 +52,39 @@
     /* Ensures overlay is above everything */
 }
 
+.Admin-overlay div::-webkit-scrollbar-thumb {
+    background-color: rgb(177, 177, 177);
+    border-radius: 6px;
+}
+
+.Admin-overlay div::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+}
+
+.Admin-overlay div::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 150, 150);
+}
+
+.Admin-overlay textarea::-webkit-scrollbar-thumb {
+    background-color: rgb(177, 177, 177);
+    border-radius: 6px;
+}
+
+.Admin-overlay textarea::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+}
+
+.Admin-overlay textarea::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 150, 150);
+}
+
 .Admin-overlay-content {
     background-color: white;
     color: black;
-    width: 25%;
-    height: 70%;
+    min-width: 25%;
+    height: 72%;
     padding: 20px;
     cursor: default;
     margin-right: 10%;
@@ -67,11 +95,12 @@
 .Admin-overlay-preview {
     background-color: white;
     width: 25%;
-    height: 70%;
+    height: 72%;
     color: black;
     padding: 20px;
     position: relative;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .Input-row {
@@ -100,37 +129,34 @@
 #Save-button {
     background-color: rgb(143, 255, 143);
     border-radius: 10px;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
     font-size: large;
 }
 
 #Publish-button {
     background-color: rgb(143, 255, 143);
     border-radius: 10px;
-    position: absolute;
-    bottom: 20px;
-    right: 85px;
     font-size: large;
 }
 
 #Unpublish-button {
     background-color: rgb(255, 152, 152);
     border-radius: 10px;
-    position: absolute;
-    bottom: 20px;
-    right: 85px;
     font-size: large;
 }
 
 #Delete-button {
     background-color: rgb(255, 152, 152);
     border-radius: 10px;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
     font-size: large;
+}
+
+.Bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Bottom-buttons button {
+    margin: 0px 10px 0px 10px;
 }
 
 .Admin-overlay h1 {

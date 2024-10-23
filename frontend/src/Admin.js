@@ -265,10 +265,15 @@ const AdminImage = (props) => {
                             />
                             </div>
                             <p>{imageUrl}</p>
-                            <button id="Delete-button" onClick={handleDelete}>Delete</button>
-
-                            <button id="Save-button" onClick={handleUpdate}>Save</button>
-                            {props.isPublished === 0 ? <button id="Publish-button" onClick={handlePublish}>Publish</button> : <button id="Unpublish-button" onClick={handleUnpublish}>Unpublish</button>}
+                            <div className="Bottom-buttons">
+                                <div id="Left-bottom-buttons">
+                                    <button id="Delete-button" onClick={handleDelete}>Delete</button>
+                                </div>
+                                <div id="Right-bottom-buttons">
+                                    <button id="Save-button" onClick={handleUpdate}>Save</button>
+                                    {props.isPublished === 0 ? <button id="Publish-button" onClick={handlePublish}>Publish</button> : <button id="Unpublish-button" onClick={handleUnpublish}>Unpublish</button>}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="Admin-overlay-preview">
