@@ -120,42 +120,38 @@
     margin-right: 5px;
 }
 
-#Exit-button {
+.Red-button {
     background-color: rgb(255, 152, 152);
     border-radius: 10px;
     font-size: large;
 }
 
-#Save-button {
+#Admin-page button {
+    transition: filter 0.2s;
+}
+
+#Admin-page button:hover {
+    filter: brightness(0.85);
+}
+
+.Green-button {
     background-color: rgb(143, 255, 143);
     border-radius: 10px;
     font-size: large;
 }
 
-#Publish-button {
-    background-color: rgb(143, 255, 143);
+.Grey-button {
+    background-color: rgb(202, 202, 202);
     border-radius: 10px;
     font-size: large;
 }
 
-#Unpublish-button {
-    background-color: rgb(255, 152, 152);
-    border-radius: 10px;
-    font-size: large;
-}
-
-#Delete-button {
-    background-color: rgb(255, 152, 152);
-    border-radius: 10px;
-    font-size: large;
-}
-
-.Bottom-buttons {
+.Buttons-div {
     display: flex;
     justify-content: space-between;
 }
 
-.Bottom-buttons button {
+.Buttons-div button {
     margin: 0px 10px 0px 10px;
 }
 
@@ -199,4 +195,14 @@
     bottom: 50px;
     right: 100px;
     align-items: center;
+}
+
+#Baker-notes {
+    width: 700px;
+}
+
+#Baker-notes-textarea {
+    width: 694px;
+    height: 500px;
+    resize: none;
 }

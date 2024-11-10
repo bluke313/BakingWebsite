@@ -5,6 +5,8 @@ import { Link, Image, seasonsToString, backendUrl } from './Components.js'
 
 const AdminImage = (props) => {
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+    const [isNotesVisible, setIsNotesVisible] = useState(false);
+    const [isNotesEditable, setIsNotesEditable] = useState(false);
 
     const boolToInt = (val) => { if (val) return 1; else return 0 };
     const intToBool = (val) => { if (val === 1) return true; else return false };
@@ -19,10 +21,11 @@ const AdminImage = (props) => {
     const [spring, setSpring] = useState(intToBool(props.spring));
     const [summer, setSummer] = useState(intToBool(props.summer));
     const [isFeatured, setIsFeatured] = useState(intToBool(props.isFeatured));
+    const [notes, setNotes] = useState(props.notes);
 
     const [selectedImage, setSelectedImage] = useState(null);
     const imageUrl = backendUrl + "/images/" + props.imageUrl;
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(imageUrl);    
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(imageUrl);
 
 
     const handleImageClick = () => {
@@ -45,6 +48,7 @@ const AdminImage = (props) => {
         setSelectedImage(null);
         setImagePreviewUrl(imageUrl);
         setIsFeatured(intToBool(props.isFeatured));
+        setIsNotesVisible(false);
     };
 
     const handleNameChange = (event) => { setName(event.target.value) };
@@ -57,6 +61,7 @@ const AdminImage = (props) => {
     const handleSpringChange = (event) => { setSpring(event.target.checked) };
     const handleSummerChange = (event) => { setSummer(event.target.checked) };
     const handleIsFeaturedChange = (event) => { setIsFeatured(event.target.checked) };
+    const handleNotesChange = (event) => { setNotes(event.target.value) };
 
     const handleUpdate = async () => {
         const userResponse = window.confirm("Are you sure? This will overwrite previous data.");
@@ -75,7 +80,7 @@ const AdminImage = (props) => {
             formData.append('spring', boolToInt(spring));
             formData.append('summer', boolToInt(summer));
             formData.append('isFeatured', boolToInt(isFeatured));
-            
+
             const response = await fetch(`${backendUrl}/update-item`, {
                 method: 'PUT',
                 body: formData,
@@ -183,98 +188,149 @@ const AdminImage = (props) => {
         setImgWidth(200 * naturalWidth / naturalHeight);
     };
 
+    const handleNotesToggle = () => {
+        setIsNotesVisible(!isNotesVisible);
+        setIsNotesEditable(false);
+    };
+
+    const handleNotesSave = async () => {
+        const response = await fetch(`${backendUrl}/update-notes`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: props.id,
+                notes: notes
+            }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert('Item updated successfully!');
+            props.refreshData();
+            setIsNotesEditable(false);
+        } else {
+            alert(`Error: ${data.error}`);
+        }
+    };
+
     return (
-        <div>
+        <div id="Admin-page">
             <div
                 onClick={handleImageClick}
                 className='Admin-image'>
-                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad}/>
+                <img src={imageUrl} alt="hidden" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} onLoad={handleImageLoad} />
                 <svg width={150} height={200}>
-                    <image href={imageUrl} height="200" x={ (150 - imgWidth) / 2 }/>
+                    <image href={imageUrl} height="200" x={(150 - imgWidth) / 2} />
                 </svg>
                 {props.name}
             </div>
             {isOverlayVisible && (
                 <div className="Admin-overlay">
                     <div className="Admin-overlay-content">
-                        <button id="Exit-button" onClick={handleClose}>Exit</button>
-                        <h1>{props.name}</h1>
-                        <div className="Admin-overlay-content-container">
-                            <p className="Input-title">id: {props.id}</p>
-                            {props.isPublished === 1 && <div className="Input-row"><p className="Input-title">featured:</p><input
-                                type='checkbox'
-                                checked={isFeatured}
-                                onChange={handleIsFeaturedChange}
-                            />
-                            </div>}
-                            <div className="Input-row"><p className="Input-title">name:</p><input
-                                type='text'
-                                value={name}
-                                onChange={handleNameChange} />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">titleLine1:</p><input
-                                type='text'
-                                value={title1}
-                                onChange={handleTitle1Change}
-                                maxLength={18} />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">titleLine2:</p><input
-                                type='text'
-                                value={title2}
-                                onChange={handleTitle2Change}
-                                maxLength={18} />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">description1:</p><textarea
-                                type='text'
-                                value={description1}
-                                onChange={handleDescription1Change} />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">description2:</p><textarea
-                                type='text'
-                                value={description2}
-                                onChange={handleDescription2Change} />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">fall:</p><input
-                                type='checkbox'
-                                checked={fall}
-                                onChange={handleFallChange}
-                            />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">winter:</p><input
-                                type='checkbox'
-                                checked={winter}
-                                onChange={handleWinterChange}
-                            />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">spring:</p><input
-                                type='checkbox'
-                                checked={spring}
-                                onChange={handleSpringChange}
-                            />
-                            </div>
-                            <div className="Input-row"><p className="Input-title">summer:</p><input
-                                type='checkbox'
-                                checked={summer}
-                                onChange={handleSummerChange}
-                            />
-                            </div>
-                            <div className="Input-row" id="Image-input"><p className="Input-title">photo:</p><input
-                                type='file'
-                                accept="image/*"
-                                onChange={handleImageChange}
-                            />
-                            </div>
-                            <p>{imageUrl}</p>
-                            <div className="Bottom-buttons">
-                                <div id="Left-bottom-buttons">
-                                    <button id="Delete-button" onClick={handleDelete}>Delete</button>
-                                </div>
-                                <div id="Right-bottom-buttons">
-                                    <button id="Save-button" onClick={handleUpdate}>Save</button>
-                                    {props.isPublished === 0 ? <button id="Publish-button" onClick={handlePublish}>Publish</button> : <button id="Unpublish-button" onClick={handleUnpublish}>Unpublish</button>}
-                                </div>
-                            </div>
+                        <div className="Buttons-div">
+                            <button className="Red-button" onClick={handleClose}>Exit</button>
+                            <button className="Grey-button" onClick={handleNotesToggle}>Baker Notes</button>
                         </div>
+                        <h1>{props.name}</h1>
+
+                        {isNotesVisible ?
+                            <>
+                                {isNotesEditable ?
+                                    <div><textarea
+                                        id="Baker-notes-textarea"
+                                        type='text'
+                                        value={notes}
+                                        onChange={handleNotesChange}
+                                    /></div>
+                                    :
+                                    <div>{ notes==="" || notes==null ? "Edit to add notes" : <p id="Baker-notes">{notes}</p>}</div>
+                                }
+                                <div className="Buttons-div">
+                                    <div />
+                                    {isNotesEditable ? <button className="Green-button" onClick={handleNotesSave}>Save</button> : <button className="Red-button" onClick={() => setIsNotesEditable(true)}>Edit</button>}
+                                </div>
+                            </>
+                            :
+                            <>
+                                <div className="Admin-overlay-content-container">
+                                    <p className="Input-title">id: {props.id}</p>
+                                    {props.isPublished === 1 && <div className="Input-row"><p className="Input-title">featured:</p><input
+                                        type='checkbox'
+                                        checked={isFeatured}
+                                        onChange={handleIsFeaturedChange}
+                                    />
+                                    </div>}
+                                    <div className="Input-row"><p className="Input-title">name:</p><input
+                                        type='text'
+                                        value={name}
+                                        onChange={handleNameChange} />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">titleLine1:</p><input
+                                        type='text'
+                                        value={title1}
+                                        onChange={handleTitle1Change}
+                                        maxLength={18} />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">titleLine2:</p><input
+                                        type='text'
+                                        value={title2}
+                                        onChange={handleTitle2Change}
+                                        maxLength={18} />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">description1:</p><textarea
+                                        type='text'
+                                        value={description1}
+                                        onChange={handleDescription1Change} />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">description2:</p><textarea
+                                        type='text'
+                                        value={description2}
+                                        onChange={handleDescription2Change} />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">fall:</p><input
+                                        type='checkbox'
+                                        checked={fall}
+                                        onChange={handleFallChange}
+                                    />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">winter:</p><input
+                                        type='checkbox'
+                                        checked={winter}
+                                        onChange={handleWinterChange}
+                                    />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">spring:</p><input
+                                        type='checkbox'
+                                        checked={spring}
+                                        onChange={handleSpringChange}
+                                    />
+                                    </div>
+                                    <div className="Input-row"><p className="Input-title">summer:</p><input
+                                        type='checkbox'
+                                        checked={summer}
+                                        onChange={handleSummerChange}
+                                    />
+                                    </div>
+                                    <div className="Input-row" id="Image-input"><p className="Input-title">photo:</p><input
+                                        type='file'
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                    />
+                                    </div>
+                                    <p>{imageUrl}</p>
+                                    <div className="Buttons-div">
+                                        <div>
+                                            <button className="Red-button" onClick={handleDelete}>Delete</button>
+                                        </div>
+                                        <div>
+                                            <button className="Green-button" onClick={handleUpdate}>Save</button>
+                                            {props.isPublished === 0 ? <button className="Green-button" onClick={handlePublish}>Publish</button> : <button className="Red-button" onClick={handleUnpublish}>Unpublish</button>}
+                                        </div>
+                                    </div>
+                                </div></>}
+
                     </div>
                     <div className="Admin-overlay-preview">
                         <h1>Preview</h1>
@@ -365,6 +421,7 @@ export const Admin = () => {
                         descriptionParagraph2={item.descriptionParagraph2}
                         isPublished={item.isPublished}
                         publishedDate={new Date().toISOString().split('T')[0]}
+                        notes={item.notes}
                     />
                 ))}
             </div>
@@ -395,6 +452,7 @@ export const Admin = () => {
                         isPublished={item.isPublished}
                         isFeatured={item.isFeatured}
                         publishedDate={item.publishedDate}
+                        notes={item.notes}
                     />
                 ))}
             </div>

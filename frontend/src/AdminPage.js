@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './AdminPage.css';
 
 const AdminPage = () => {
-    const [authorized, setAuthorized] = useState(false);
+    const [authorized, setAuthorized] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");

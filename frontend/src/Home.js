@@ -2,12 +2,13 @@ import snowflake from './snowflake.svg'
 
 import logo from './images/caseysLogo.png'
 import './Home.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, Divider, TextDivider, Image, Season, Footer, seasonsToString, backendUrl } from './Components.js'
 
 const Home = () => {
   const [returnVisible, setReturnVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const appHeaderRef = useRef(null);
 
   const [fallItems, setFallItems] = useState([]);
   const [winterItems, setWinterItems] = useState([]);
@@ -65,18 +66,24 @@ const Home = () => {
 
   }, []);
 
+  const scrollToHeader = () => {
+    if (appHeaderRef.current) {
+      appHeaderRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   return (
     <div className="App">
 
-      <header id="App-header">
+      <header id="App-header" ref={appHeaderRef}>
         <div className="App-header-text">
           <Link text="Home" href="/" /><TextDivider />
           <Link text="Fall" href="/Fall" /><TextDivider />
           <Link text="Winter" href="/Winter" /><TextDivider />
           <Link text="Spring" href="/Spring" /><TextDivider />
           <Link text="Summer" href="/Summer" /><TextDivider />
-          <Link text="About" href="/#About" /><TextDivider />
-          <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" />
+          {/* <Link text="About" href="/#About" /><TextDivider /> */}
+          {/* <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" /> */}
         </div>
         <div>
           {/* <Link text="Admin" href="/Admin" style={{}} /> */}
@@ -158,12 +165,12 @@ const Home = () => {
 
       <Footer />
 
-      <a
+      <button
         className={`Return-button ${returnVisible ? 'show' : ''}`}
-        href="#App-header"
+        onClick={scrollToHeader}
       >
         &#x2191;
-      </a>
+      </button>
 
     </div>
   );

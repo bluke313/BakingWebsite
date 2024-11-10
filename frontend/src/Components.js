@@ -2,8 +2,8 @@ import './Components.css';
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-export const backendUrl = "https://caseyscookies.onrender.com";
-// export const backendUrl = "http://localhost:10000";
+// export const backendUrl = "https://caseyscookies.onrender.com";
+export const backendUrl = "http://localhost:10000";
 
 
 export const seasonsToString = (fall, winter, spring, summer) => {

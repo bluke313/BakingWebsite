@@ -9,7 +9,7 @@
   height: 50px;
   width: 50px;
   left: 50%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0);
   color: white;
   border: none;
   border-radius: 100%;
@@ -17,17 +17,17 @@
   font-size: 22px;
   transform: translate(-50%);
   opacity: 0;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.5s ease, visibility 1s ease;
   visibility: hidden;
 }
 
 .Return-button.show {
-  opacity: 1;
+  opacity: 0.45;
   visibility: visible;
 }
 
 .Return-button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.85;
 }
 
 #App-header {

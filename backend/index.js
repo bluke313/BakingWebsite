@@ -104,9 +104,6 @@ app.get('/featured', (req, res) => {
 
 app.put('/update-item', upload.single('image'), (req, res) => {
 
-    console.log(req.body);
-    console.log(req.file);
-
     const { id, newName, title1, title2, description1, description2, fall, winter, spring, summer, isFeatured } = req.body;
     const date = new Date().toISOString().split('T')[0];
     let imageUrl = req.file ? req.file.filename : null;
@@ -152,13 +149,29 @@ app.put('/update-item', upload.single('image'), (req, res) => {
     }
 
 
-    db.run(sql, params, function (err) {
+    db.run(sql, params, function(err) {
         if (err) {
             console.log(err);
             return res.status(500).json({ error: err.message });
         }
         res.json({
             message: 'Items updated successfully',
+        });
+    });
+});
+
+app.put('/update-notes', (req, res) => {
+
+    const {id, notes } = req.body;
+    sql = `UPDATE items SET notes = ? WHERE id = ?`;
+
+    db.run(sql, [notes, id], function(err) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({
+            message: 'Item updated successfully',
         });
     });
 });

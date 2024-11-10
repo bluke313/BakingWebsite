@@ -11,7 +11,7 @@ const SeasonPage = (props) => {
                 <Link text="Winter" href="/Winter" /><TextDivider />
                 <Link text="Spring" href="/Spring" /><TextDivider />
                 <Link text="Summer" href="/Summer" /><TextDivider />
-                <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" />
+                {/* <Link text="Order" href="https://forms.gle/ZekVfxBqxLscv9ud9" target="_blank" /> */}
             </header>
             <Divider />
             <h1 id="Title">{props.title}</h1>
